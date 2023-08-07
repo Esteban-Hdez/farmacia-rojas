@@ -17,7 +17,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/Farmaciav1">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -39,8 +39,8 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Agregar Producto</a>
-                        <a class="collapse-item" href="cards.html">Modificar Producto</a>
+                        <a class="collapse-item" href="/Farmaciav1/productos.jsp">Productos</a>
+                        <a class="collapse-item" href="/Farmaciav1/agregarProducto.jsp">Agregar Producto</a>                       
                     </div>
                 </div>
             </li>

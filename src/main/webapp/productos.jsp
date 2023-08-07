@@ -34,6 +34,7 @@
                                          aria-labelledby="dropdownMenuLink">
                                         <div class="dropdown-header">Acciones:</div>
                                         <a class="dropdown-item" href="/Farmaciav1/agregarProducto.jsp">Agregar producto</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -62,8 +63,11 @@
                                             <td>20.50</td>
                                             <td>65</td>
                                             <td>
-                                                <button type="button" class="btn btn-warning"><i class="bi bi-pencil"></i></button>
-                                                <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                                                <div class="row">
+                                                    <button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>
+                                                    &nbsp;
+                                                    <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -73,7 +77,8 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col">
+
                         <%@include file="/componentes/status.jsp" %>
                     </div>
 

@@ -24,11 +24,11 @@
                 <!-- Content Row -->
                 <div class="row">
                     
-                    <div class="col">
+                    <div class="col-md-8">
                         
                     </div>
                     
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <%@include file="/componentes/status.jsp" %>
                     </div>
                     

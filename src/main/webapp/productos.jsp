@@ -21,7 +21,7 @@
 
                 <div class="row">
 
-                    <div class="col">
+                    <div class="col-md-8">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Tabla de inventario</h6>
@@ -40,45 +40,48 @@
                             </div>
                             <div class="card-body">
 
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">id</th>
-                                            <th scope="col">Código</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Fecha de ingreso</th>
-                                            <th scope="col">Fecha de vencimiento</th>
-                                            <th scope="col">Precio</th>
-                                            <th scope="col">Cantidad</th>
-                                            <th scope="col">Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>44545</td>
-                                            <td>Paracetamol</td>
-                                            <td>02/08/2023</td>
-                                            <td>05/06/2025</td>
-                                            <td>20.50</td>
-                                            <td>65</td>
-                                            <td>
-                                                <div class="row">
-                                                    <button type="button" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i></button>
-                                                    &nbsp;
-                                                    <button type="button" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">id</th>
+                                                <th scope="col">Código</th>
+                                                <th scope="col">Nombre</th>
+                                                <th scope="col">Fecha de ingreso</th>
+                                                <th scope="col">Fecha de vencimiento</th>
+                                                <th scope="col">Precio</th>
+                                                <th scope="col">Cantidad</th>
+                                                <th scope="col">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>44545</td>
+                                                <td>Paracetamol</td>
+                                                <td>02/08/2023</td>
+                                                <td>05/06/2025</td>
+                                                <td>20.50</td>
+                                                <td>65</td>
+                                                <td>
+                                                    <div class="row">
+                                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="bi bi-pencil"></i></button>
+                                                        &nbsp;
+                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
 
                             </div>
                         </div>
                     </div>
 
-                    <div class="col">
-
+                    <div class="col-md-4">
                         <%@include file="/componentes/status.jsp" %>
                     </div>
 

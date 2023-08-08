@@ -1,4 +1,4 @@
-package Clases;
+package Dominio;
 
 import java.util.Date;
 
@@ -8,14 +8,29 @@ public class Producto {
     private String nombre;
     private Date fechaIngreso;
     private Date fechaVencimiento;
-    private TipoProducto tipo;
+    private String tipo;
+    private int idTipo;
     private int cantidad;
     private double precio;
 
     public Producto() {
     }
 
-    public Producto(int idProducto, String codigoBarras, String nombre, Date fechaIngreso, Date fechaVencimiento, TipoProducto tipo, int cantidad, double precio) {
+    public Producto(int idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Producto(String codigoBarras, String nombre, Date fechaIngreso, Date fechaVencimiento, int idTipo, int cantidad, double precio) {
+        this.codigoBarras = codigoBarras;
+        this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaVencimiento = fechaVencimiento;
+        this.idTipo = idTipo;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
+    public Producto(int idProducto, String codigoBarras, String nombre, Date fechaIngreso, Date fechaVencimiento, String tipo, int cantidad, double precio) {
         this.idProducto = idProducto;
         this.codigoBarras = codigoBarras;
         this.nombre = nombre;
@@ -34,7 +49,13 @@ public class Producto {
         this.codigoBarras = codigoBarras;
     }
 
-    
+    public int getIdTipo() {
+        return idTipo;
+    }
+
+    public void setIdTipo(int idTipo) {
+        this.idTipo = idTipo;
+    }
 
     public int getIdProducto() {
         return idProducto;
@@ -68,11 +89,11 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public TipoProducto getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoProducto tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -91,6 +112,9 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Producto{" + "idProducto=" + idProducto + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", fechaIngreso=" + fechaIngreso + ", fechaVencimiento=" + fechaVencimiento + ", tipo=" + tipo + ", cantidad=" + cantidad + ", precio=" + precio + '}';
+    }
 }

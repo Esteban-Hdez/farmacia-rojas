@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="Dominio.Producto"%>
 <%@include file="/componentes/encabezado.jsp" %>
 
 <body id="page-top">
@@ -55,23 +57,28 @@
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
+                                        <%
+                                            List<Producto> productos = (List) request.getSession().getAttribute("productos");
+                                        %>
                                         <tbody>
+                                            <% for (Producto p : productos) {%>
                                             <tr>
-                                                <th scope="row">1</th>
-                                                <td>44545</td>
-                                                <td>Paracetamol</td>
-                                                <td>02/08/2023</td>
-                                                <td>05/06/2025</td>
-                                                <td>20.50</td>
-                                                <td>65</td>
+                                                <th scope="row"><%=p.getIdProducto() %></th>
+                                                <td><%=p.getCodigoBarras() %></td>
+                                                <td><%=p.getNombre() %></td>
+                                                <td><%=p.getFechaIngreso() %></td>
+                                                <td><%=p.getFechaVencimiento() %></td>
+                                                <td><%=p.getPrecio() %></td>
+                                                <td><%=p.getCantidad() %></td>
                                                 <td>
                                                     <div class="row">
-                                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="bi bi-pencil"></i></button>
+                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="bi bi-pencil"></i></button>
                                                         &nbsp;
                                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar"><i class="bi bi-trash"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <%}%>
                                         </tbody>
                                     </table>
 

@@ -1,4 +1,4 @@
-package Clases;
+package Dominio;
 
 import java.util.Date;
 import java.util.ArrayList;

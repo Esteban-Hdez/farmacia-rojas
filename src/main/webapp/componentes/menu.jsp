@@ -39,7 +39,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/Farmaciav1/productos.jsp">Productos</a>
+                        <a class="collapse-item" href="/Farmaciav1/ServletControlador1">Productos</a>
                         <a class="collapse-item" href="/Farmaciav1/agregarProducto.jsp">Agregar Producto</a>                       
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-package Clases;
+package Dominio;
 
 public class DetalleVenta {
     private Producto producto;

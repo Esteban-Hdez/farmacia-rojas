@@ -68,7 +68,7 @@
                                                 <td><%=p.getNombre() %></td>
                                                 <td><%=p.getFechaIngreso() %></td>
                                                 <td><%=p.getFechaVencimiento() %></td>
-                                                <td><%=p.getPrecio() %></td>
+                                                <td><%="Q "+p.getPrecio() %></td>
                                                 <td><%=p.getCantidad() %></td>
                                                 <td>
                                                     <div class="row">

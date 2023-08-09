@@ -6,8 +6,8 @@ public class Producto {
     private int idProducto;
     private String codigoBarras;
     private String nombre;
-    private Date fechaIngreso;
-    private Date fechaVencimiento;
+    private String fechaIngreso;
+    private String fechaVencimiento;
     private String tipo;
     private int idTipo;
     private int cantidad;
@@ -20,7 +20,7 @@ public class Producto {
         this.idProducto = idProducto;
     }
 
-    public Producto(String codigoBarras, String nombre, Date fechaIngreso, Date fechaVencimiento, int idTipo, int cantidad, double precio) {
+    public Producto(String codigoBarras, String nombre, String fechaIngreso, String fechaVencimiento, int idTipo, int cantidad, double precio) {
         this.codigoBarras = codigoBarras;
         this.nombre = nombre;
         this.fechaIngreso = fechaIngreso;
@@ -30,7 +30,7 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Producto(int idProducto, String codigoBarras, String nombre, Date fechaIngreso, Date fechaVencimiento, String tipo, int cantidad, double precio) {
+    public Producto(int idProducto, String codigoBarras, String nombre, String fechaIngreso, String fechaVencimiento, String tipo, int cantidad, double precio) {
         this.idProducto = idProducto;
         this.codigoBarras = codigoBarras;
         this.nombre = nombre;
@@ -73,19 +73,19 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public Date getFechaIngreso() {
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Date getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
@@ -115,6 +115,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", fechaIngreso=" + fechaIngreso + ", fechaVencimiento=" + fechaVencimiento + ", tipo=" + tipo + ", cantidad=" + cantidad + ", precio=" + precio + '}';
+        return "Producto{" + "idProducto=" + idProducto + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", fechaIngreso=" + fechaIngreso + ", fechaVencimiento=" + fechaVencimiento + ", tipo=" + idTipo + ", cantidad=" + cantidad + ", precio=" + precio + '}';
     }
 }

@@ -36,8 +36,8 @@ public class ProductoDAO {
                 int idProducto = rs.getInt("id_producto");
                 String codigoBarras = rs.getString("codigo_barras");
                 String nombre = rs.getString("nombre");
-                Date fechaIngreso = rs.getDate("fecha_ingreso");
-                Date fechaVencimiento = rs.getDate("fecha_vencimiento");
+                String fechaIngreso = rs.getString("fecha_ingreso");
+                String fechaVencimiento = rs.getString("fecha_vencimiento");
                 String idTipoProducto = rs.getString("descripcion");
                 int cantidad = rs.getInt("cantidad");
                 double precio = rs.getDouble("precio");
@@ -78,8 +78,8 @@ public class ProductoDAO {
                 int idProducto = rs.getInt("id_producto");
                 String codigoBarras = rs.getString("codigo_barras");
                 String nombre = rs.getString("nombre");
-                Date fechaIngreso = rs.getDate("fecha_ingreso");
-                Date fechaVencimiento = rs.getDate("fecha_vencimiento");
+                String fechaIngreso = rs.getString("fecha_ingreso");
+                String fechaVencimiento = rs.getString("fecha_vencimiento");
                 String idTipoProducto = rs.getString("id_tipo_producto");
                 int cantidad = rs.getInt("cantidad");
                 double precio = rs.getDouble("precio");
@@ -115,8 +115,8 @@ public class ProductoDAO {
             // Establecer los valores de los parámetros en la consulta SQL
             ps.setString(1, producto.getCodigoBarras());
             ps.setString(2, producto.getNombre());
-            ps.setDate(3, new java.sql.Date(producto.getFechaIngreso().getTime()));
-            ps.setDate(4, new java.sql.Date(producto.getFechaVencimiento().getTime()));
+            ps.setString(3, producto.getFechaIngreso());
+            ps.setString(4, producto.getFechaVencimiento());
             ps.setInt(5, producto.getIdTipo());
             ps.setInt(6, producto.getCantidad());
             ps.setDouble(7, producto.getPrecio());
@@ -155,8 +155,8 @@ public class ProductoDAO {
             // Establecer los valores de los parámetros en la consulta SQL
             ps.setString(1, producto.getCodigoBarras());
             ps.setString(2, producto.getNombre());
-            ps.setDate(3, new java.sql.Date(producto.getFechaIngreso().getTime()));
-            ps.setDate(4, new java.sql.Date(producto.getFechaVencimiento().getTime()));
+            ps.setString(3, producto.getFechaIngreso());
+            ps.setString(4, producto.getFechaVencimiento());
             ps.setInt(5, producto.getIdTipo());
             ps.setInt(6, producto.getCantidad());
             ps.setDouble(7, producto.getPrecio());

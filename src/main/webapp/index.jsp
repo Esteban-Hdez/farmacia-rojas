@@ -41,3 +41,7 @@
         <!-- End of Main Content -->
 
         <%@include file="/componentes/footer.jsp" %>
+        
+        <%@include file="/componentes/scripts.jsp" %>
+        
+        <%@include file="/componentes/endPage.jsp" %>

@@ -1,3 +1,4 @@
+<%@page import="Dominio.Producto"%>
 <%@page import="java.util.List"%>
 <%@page import="Dominio.TipoProducto"%>
 <%@include file="/componentes/encabezado.jsp" %>
@@ -19,7 +20,7 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-4 text-gray-800">Agregar Producto</h1>
+                <h1 class="h3 mb-4 text-gray-800">Editar Producto</h1>
 
                 <div class="row">
 
@@ -31,16 +32,22 @@
                             <div class="card-body">
                                 
                                 <%@include file="/componentes/mensaje.jsp" %>
-
-                                <form action="SvAgregarProducto" method="POST">
-
+                                
+                                <% Producto producto = (Producto) request.getSession().getAttribute("productoEditar"); 
+                                   System.out.println(producto.toString());
+                                %>
+                                
+                                <form action="SvEditar" method="POST">
+                                    
+                                    <input type="hidden" name="idProducto" value="<%=producto.getIdProducto() %>">
+                                    
                                     <div class="form-group">
                                         <label for="codigoBarras">Código de barras</label>
                                         <div class="input-group mb-2">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="bi bi-upc"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" placeholder="" required>
+                                            <input type="text" class="form-control" id="codigoBarras" name="codigoBarras" value="<%=producto.getCodigoBarras() %>" required>
                                         </div>
                                     </div>
 
@@ -50,7 +57,7 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="bi bi-prescription2"></i></div>
                                             </div>
-                                            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" placeholder="" required>
+                                            <input type="text" class="form-control" id="nombreProducto" name="nombreProducto" value="<%=producto.getNombre() %>" required>
                                         </div>
                                     </div>
 
@@ -58,12 +65,12 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="fechaIngreso">Fecha de ingreso</label>
-                                            <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" placeholder="" required>
+                                            <input type="date" class="form-control" id="fechaIngreso" name="fechaIngreso" value="<%=producto.getFechaIngreso() %>" required>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label for="fechaVencimiento">Fecha de vencimiento</label>
-                                            <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" placeholder="Fecha de vencimiento" required>
+                                            <input type="date" class="form-control" id="fechaVencimiento" name="fechaVencimiento" value="<%=producto.getFechaVencimiento() %>" required>
                                         </div>
 
                                     </div>
@@ -78,10 +85,15 @@
                                                 List<TipoProducto> tipoProductos = (List) request.getSession().getAttribute("tiposProductos");
                                             %>
                                             <select class="form-control" aria-label="Default select example" id="tipoMedicamento" name="tipoMedicamento" required>
-                                                <option selected>~ Selecciona tipo de medicamento ~</option>
-                                                <% for (TipoProducto tp : tipoProductos) {%>
-                                                <option value="<%=tp.getIdTipoProducto()%>"><%=tp.getDescripcion()%></option>
-                                                <% } %>
+                                                <option>~ Selecciona tipo de medicamento ~</option>
+                                                <% for (TipoProducto tp : tipoProductos) {
+                                                    if (tp.getIdTipoProducto() == producto.getIdTipo()) { %>
+                                                        <option selected value="<%=tp.getIdTipoProducto()%>"><%=tp.getDescripcion()%></option>
+                                                <%  } else { %>
+                                                        <option value="<%=tp.getIdTipoProducto()%>"><%=tp.getDescripcion()%></option>
+                                                <%  }
+                                                    
+                                                   } %>
                                             </select>
                                         </div>
                                     </div>
@@ -94,7 +106,7 @@
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text"><i class="bi bi-hash"></i></div>
                                                 </div>
-                                                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="" required>
+                                                <input type="number" class="form-control" id="cantidad" name="cantidad" value="<%=producto.getCantidad() %>" required>
                                             </div>
                                         </div>
 
@@ -102,16 +114,16 @@
                                             <label for="precio">Precio</label>
                                             <div class="input-group mb-2">
                                                 <div class="input-group-prepend">
-                                                    <div class="input-group-text">Q</div>
+                                                    <div class="input-group-text">Q</i></div>
                                                 </div>
-                                                <input type="number" class="form-control" id="precio" name="precio" placeholder="" required>
+                                                <input type="number" class="form-control" id="precio" name="precio" value="<%=producto.getPrecio() %>" required>
                                             </div>
                                         </div>
 
                                     </div>
 
                                     <div class="form-group" style="margin-top: 5%;">                                                 
-                                        <button type="submit" class="btn btn-success"><i class="bi bi-plus-lg"></i> Agregar</button>
+                                        <button type="submit" class="btn btn-success"><i class="bi bi-pencil"></i> Editar</button>
                                         <button type="reset" class="btn btn-warning"><i class="bi bi-trash2"></i> Limpiar</button>
                                     </div>
 

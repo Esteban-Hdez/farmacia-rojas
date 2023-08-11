@@ -40,6 +40,17 @@ public class Producto {
         this.cantidad = cantidad;
         this.precio = precio;
     }
+    
+    public Producto(int idProducto, String codigoBarras, String nombre, String fechaIngreso, String fechaVencimiento, int idTipo, int cantidad, double precio) {
+        this.idProducto = idProducto;
+        this.codigoBarras = codigoBarras;
+        this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaVencimiento = fechaVencimiento;
+        this.idTipo = idTipo;
+        this.cantidad = cantidad;
+        this.precio = precio;
+    }
 
     public String getCodigoBarras() {
         return codigoBarras;

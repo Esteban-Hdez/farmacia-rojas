@@ -61,7 +61,9 @@ public class ProductoDAO {
     }
 
     // Método para recuperar un producto por su id
-    public Producto obtenerProductoPorId(Producto producto) {
+    public Producto obtenerProductoPorId(int id) {
+        Producto producto = null;
+        
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -70,7 +72,7 @@ public class ProductoDAO {
         try {
             conn = Conexion.getConnection();
             ps = conn.prepareStatement(SQL_SELECT_PRODUCTO_BY_ID);
-            ps.setInt(1, producto.getIdProducto());
+            ps.setInt(1, id);
             rs = ps.executeQuery();
 
             // Verificar si se encontró un producto con el id proporcionado
@@ -80,7 +82,7 @@ public class ProductoDAO {
                 String nombre = rs.getString("nombre");
                 String fechaIngreso = rs.getString("fecha_ingreso");
                 String fechaVencimiento = rs.getString("fecha_vencimiento");
-                String idTipoProducto = rs.getString("id_tipo_producto");
+                int idTipoProducto = rs.getInt("id_tipo_producto");
                 int cantidad = rs.getInt("cantidad");
                 double precio = rs.getDouble("precio");
 

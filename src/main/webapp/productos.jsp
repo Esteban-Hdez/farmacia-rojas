@@ -42,9 +42,11 @@
                             </div>
                             <div class="card-body">
 
+                                <%@include file="/componentes/mensaje.jsp" %>
+
                                 <div class="table-responsive">
 
-                                    <table class="table">
+                                    <table id="my-table" class="table">
                                         <thead>
                                             <tr>
                                                 <th scope="col">id</th>
@@ -57,30 +59,52 @@
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
-                                        <%
-                                            List<Producto> productos = (List) request.getSession().getAttribute("productos");
-                                        %>
+                                        <%List<Producto> productos = (List) request.getSession().getAttribute("productos"); %>
                                         <tbody>
                                             <% for (Producto p : productos) {%>
                                             <tr>
-                                                <th scope="row"><%=p.getIdProducto() %></th>
-                                                <td><%=p.getCodigoBarras() %></td>
-                                                <td><%=p.getNombre() %></td>
-                                                <td><%=p.getFechaIngreso() %></td>
-                                                <td><%=p.getFechaVencimiento() %></td>
-                                                <td><%="Q "+p.getPrecio() %></td>
-                                                <td><%=p.getCantidad() %></td>
+                                                <th class="prod-id" scope="row"><%=p.getIdProducto()%></th>
+                                                <td><%=p.getCodigoBarras()%></td>
+                                                <td><%=p.getNombre()%></td>
+                                                <td><%=p.getFechaIngreso()%></td>
+                                                <td><%=p.getFechaVencimiento()%></td>
+                                                <td><%="Q " + p.getPrecio()%></td>
+                                                <td><%=p.getCantidad()%></td>
                                                 <td>
                                                     <div class="row">
-                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="tooltip" title="Editar"><i class="bi bi-pencil"></i></button>
+                                                        <a href="SvEditar?id_producto=<%=p.getIdProducto()%>" class="btn btn-warning btn-sm" role="button" aria-pressed="true"><i class="bi bi-pencil"></i></a>
                                                         &nbsp;
-                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Eliminar"><i class="bi bi-trash"></i></button>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete"><i class="bi bi-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <%}%>
                                         </tbody>
                                     </table>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteProduct" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteProduct" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteProduct"><i class="bi bi-trash text-danger"></i>&nbsp;&nbsp;Eliminar Producto</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="SvEliminar" method="POST">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="idProducto" id="idProductoDlt">
+                                                        ¿Estas seguro que deseas eliminar este producto?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
 
@@ -101,4 +125,36 @@
         <!-- End of Main Content -->
 
         <%@include file="/componentes/footer.jsp" %>
+
+
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        <script>
+            new DataTable('#my-table', {
+                lengthMenu: [
+                    [10, 20, -1],
+                    [10, 20, 'Todos']
+                ],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                }
+            });
+        </script>
+
+        <%@include file="/componentes/scripts.jsp" %>
+        
+        <script>
+            $(document).ready(function() {
+                
+                $('.btn-delete').click(function(e) {
+                    e.preventDefault();
+                    const idProd = $(this).closest('tr').find('.prod-id').text();
+                    $('#idProductoDlt').val(idProd);
+                    $('#deleteProduct').modal('show');
+                })
+                
+            })
+        </script>
+
+        <%@include file="/componentes/endPage.jsp" %>
 

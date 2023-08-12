@@ -21,17 +21,30 @@
                     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                 </div>
 
-                <!-- Content Row -->
+                <!-- Profile Row -->
                 <div class="row">
-                    
-                    <div class="col-md-8">
-                        
+
+                    <div class="col">
+                        <div class="card shadow mb-4">
+
+                            <div class="row no-gutters" style="padding: 2%; display: flex; align-items: center;">
+                                <div class="col-md-2">
+                                    <img src="img/undraw_profile.svg" alt="profile_photo">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h3 class="card-title">¡Bienvenido!</h3>
+                                        <h1 class="card-text">Nombre del usuario</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="col-md-4">
-                        <%@include file="/componentes/status.jsp" %>
-                    </div>
-                    
+
+                </div>
+                
+                <div class="row row-cols-4">
+                    <%@include file="/componentes/status.jsp" %>
                 </div>
 
             </div>
@@ -41,7 +54,7 @@
         <!-- End of Main Content -->
 
         <%@include file="/componentes/footer.jsp" %>
-        
+
         <%@include file="/componentes/scripts.jsp" %>
-        
+
         <%@include file="/componentes/endPage.jsp" %>

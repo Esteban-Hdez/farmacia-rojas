@@ -36,7 +36,6 @@
                                          aria-labelledby="dropdownMenuLink">
                                         <div class="dropdown-header">Acciones:</div>
                                         <a class="dropdown-item" href="/Farmaciav1/agregarProducto.jsp">Agregar producto</a>
-
                                     </div>
                                 </div>
                             </div>

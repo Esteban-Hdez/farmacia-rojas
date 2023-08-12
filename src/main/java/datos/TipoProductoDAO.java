@@ -7,6 +7,7 @@ import java.util.List;
 
 public class TipoProductoDAO {
     // Consultas SQL para la tabla Producto
+    
     private static final String SQL_SELECT = "SELECT * FROM tipo_producto";
 
     // Métodos y lógica para acceder a la base de datos y ejecutar las consultas

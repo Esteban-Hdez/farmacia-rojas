@@ -219,7 +219,7 @@ public class ProductoDAO {
         return eliminado;
     }
     
-    // Método para obtener productos filtrados por código de barras y nombre
+    // Método para obtener productos filtrados por código de barras y nombre nuevo
     public List<Producto> listarProductosFiltrados(String codigoBarras, String nombre) {
         List<Producto> listaProductos = new ArrayList<>();
         

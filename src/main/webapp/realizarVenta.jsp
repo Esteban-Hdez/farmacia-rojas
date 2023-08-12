@@ -90,12 +90,12 @@
                 let cell4 = row.insertCell(3);
                 let cell5 = row.insertCell(4);
                 let cell6 = row.insertCell(5);
-                let cell7 = row.insertCell(6)
+                let cell7 = row.insertCell(6);
                 
                 cell1.innerHTML = count;
                 cell2.innerHTML = "<form class='d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search'>" +
                         "<div class='input-group'>" +
-                        "<input type='number' name='codigoProducto" + count + "' type='text' class='form-control bg-light border-0 small' placeholder='Código del producto...' aria-label='Search' aria-describedby'basic-addon2'>" +
+                        "<input name='codigoProducto" + count + "' type='text' class='form-control bg-light border-0 small' placeholder='Código del producto...' aria-label='Search' aria-describedby'basic-addon2'>" +
                         "<div class='input-group-append'>" +
                         "<button class='btn btn-info' type='button'>" +
                         "<i class='fas fa-search fa-sm'></i>" +
@@ -104,7 +104,7 @@
                         "</div>" +
                         "</form>";
                 
-                cell5.innerHTML = "<input type='number' class='form-control' min='1' max='5'>"
+                cell5.innerHTML = "<input type='number' class='form-control' min='1' max='5'>";
                 
                 cell7.innerHTML = "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='bi bi-x-lg'></i></button>";
             }

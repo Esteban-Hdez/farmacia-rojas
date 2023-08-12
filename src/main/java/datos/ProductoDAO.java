@@ -15,6 +15,8 @@ public class ProductoDAO {
     private static final String SQL_SELECT_PRODUCTO_BY_ID = "SELECT * FROM Producto WHERE id_producto = ?";
     private static final String SQL_UPDATE_PRODUCTO = "UPDATE Producto SET codigo_barras = ?, nombre = ?, fecha_ingreso = ?, fecha_vencimiento = ?, id_tipo_producto = ?, cantidad = ?, precio = ? WHERE id_producto = ?";
     private static final String SQL_DELETE_PRODUCTO = "DELETE FROM Producto WHERE id_producto = ?";
+    
+    private static final String SQL_SELECT_PRODUCTOS_FILTRADOS = "SELECT * FROM Producto WHERE codigo_barras = ? OR nombre LIKE ?";
 
     // Métodos y lógica para acceder a la base de datos y ejecutar las consultas
     // Método para listar todos los productos
@@ -215,6 +217,50 @@ public class ProductoDAO {
         }
 
         return eliminado;
+    }
+    
+    // Método para obtener productos filtrados por código de barras y nombre
+    public List<Producto> listarProductosFiltrados(String codigoBarras, String nombre) {
+        List<Producto> listaProductos = new ArrayList<>();
+        
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Conexion.getConnection();
+            ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS_FILTRADOS);
+
+            // Establecer los valores de los parámetros en la consulta SQL
+            ps.setString(1, codigoBarras);
+            ps.setString(2, "%" + nombre + "%");
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idProducto = rs.getInt("id_producto");
+                codigoBarras = rs.getString("codigo_barras");
+                nombre = rs.getString("nombre");
+                String fechaIngreso = rs.getString("fecha_ingreso");
+                String fechaVencimiento = rs.getString("fecha_vencimiento");
+                String idTipoProducto = rs.getString("descripcion");
+                int cantidad = rs.getInt("cantidad");
+                double precio = rs.getDouble("precio");
+
+                // Crear un objeto Producto y agregarlo a la lista
+                Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
+                listaProductos.add(producto);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(ps);
+            Conexion.close(conn);
+        }
+
+        return listaProductos;
     }
 
 }

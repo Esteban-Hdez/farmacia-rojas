@@ -18,8 +18,6 @@ public class ServletControlador1 extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Producto> productos = new ProductoDAO().listarTodosLosProductos();
-        System.out.println("doGet");
-        System.out.println("productos: "+ productos);
         
         HttpSession misesion = request.getSession();
         misesion.setAttribute("productos", productos);

@@ -52,7 +52,7 @@
                                                 <th scope="col">Tipo de producto</th>
                                                 <th scope="col">Fecha de ingreso</th>
                                                 <th scope="col">Fecha de vencimiento</th>
-                                                <th scope="col">Precio</th>
+                                                <th scope="col">Precio (Q)</th>
                                                 <th scope="col">Cantidad</th>
                                             </tr>
                                         </thead>
@@ -65,7 +65,7 @@
                                                 <td><%=p.getTipo() %></td>
                                                 <td><%=p.getFechaIngreso()%></td>
                                                 <td><%=p.getFechaVencimiento()%></td>
-                                                <td><%="Q " + p.getPrecio()%></td>
+                                                <td><%=p.getPrecio()%></td>
                                                 <td><%=p.getCantidad()%></td>
                                             </tr>
                                             <%}%>

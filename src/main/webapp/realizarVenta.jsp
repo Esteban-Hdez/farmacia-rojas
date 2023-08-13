@@ -29,7 +29,13 @@
 
                                 <%@include file="/componentes/mensaje.jsp" %>
 
-                                <button type="button" class="btn btn-primary btn-sm" style="margin-bottom: 2%;" onclick="addRow()"><i class="bi bi-cart-plus"></i>&nbsp;&nbsp;Agregar artículo</button>
+
+                                <button type="button" class="btn btn-primary btn-icon-split" style="margin-bottom: 2%;" data-toggle="modal" data-target="#articulosModal">
+                                    <span class="icon text-white-50">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </span>
+                                    <span class="text">Agregar artículo</span>
+                                </button>
 
                                 <div class="table-responsive">
 
@@ -39,18 +45,25 @@
                                                 <th scope="col">ítem</th>
                                                 <th scope="col">Código</th>
                                                 <th scope="col">Nombre</th>
-                                                <th scope="col">Precio</th>
+                                                <th scope="col">Precio (Q)</th>
                                                 <th scope="col">Cantidad</th>
-                                                <th scope="col">Total</th>
+                                                <th scope="col">Subtotal (Q)</th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody id="products-list">
 
                                         </tbody>
                                     </table>
-                                    <div class="text-right" style="margin-right: 10%;">
-                                        <button type="button" style="margin-right: 5%;" class="btn btn-success"><i class="bi bi-cart-check"></i>&nbsp;&nbsp;Cerrar venta</button>
-                                        <span id="total"><strong>Total:</strong> Q 0.0</span>
+                                    
+                                    <div class="text-right" style="margin-right: 10%; margin-bottom: 1%; margin-top: 5%;">
+                                        <button type="button" class="btn btn-success btn-icon-split btn-lg" style="margin-right: 5%;">
+                                            <span class="icon text-white-50">
+                                                <i class="bi bi-cart-check"></i>
+                                            </span>
+                                            <span class="text">Cerrar venta</span>
+                                        </button>
+                                        <span class="h4"><strong>Total:</strong> Q <span id="totalVenta">0.00</span></span>
 
 
                                     </div>
@@ -73,55 +86,80 @@
         </div>
         <!-- End of Main Content -->
 
+
+        <!-- Buscar productos modal -->
+        <div class="modal fade" id="articulosModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Buscar artículo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body container-fluid">
+
+                        <div class="form-inline my-2 my-lg-0">
+                            <input id="searchInput" class="form-control mr-sm-4 w-50" type="search" placeholder="Buscar...">
+                            <button onclick="buscarCodigoBarras()" class="btn btn-secondary my-2 my-sm-0 mr-sm-2 btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <span class="text">Código de Barra</span>
+                            </button>
+                            <button onclick="buscarDescripcion()" class="btn btn-info my-2 my-sm-0 mr-sm-2 btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <span class="text">Descripción</span>
+                            </button>
+                        </div>
+
+                        <div class="table-responsive" style="margin-top: 2%;">
+                            
+                            <h3 id="searchMsg">Sin resultados</h3>
+
+                            <table id="my-table2" class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Código</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Precio (Q)</th>
+                                        <th scope="col">Disponibilidad</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <%List<Producto> productos = (List) request.getSession().getAttribute("productos"); %>
+                                <tbody>
+                                    <% for (Producto p : productos) {%>
+                                    <tr>
+                                        <td><%=p.getCodigoBarras()%></td>
+                                        <td><%=p.getNombre()%></td>
+                                        <td><%=p.getPrecio()%></td>
+                                        <td><%=p.getCantidad()%></td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-sm btn-delete btn-circle" onclick="addProduct(this)"><i class="bi bi-plus-lg"></i></a>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <%@include file="/componentes/footer.jsp" %>
 
         <%@include file="/componentes/scripts.jsp" %>
 
-        <script>
-            function addRow() {
-                let table = document.getElementById("products-list");
-                
-                let row = table.insertRow(-1);
-                let count = table.rows.length;
-                
-                let cell1 = row.insertCell(0);
-                let cell2 = row.insertCell(1);
-                let cell3 = row.insertCell(2);
-                let cell4 = row.insertCell(3);
-                let cell5 = row.insertCell(4);
-                let cell6 = row.insertCell(5);
-                let cell7 = row.insertCell(6);
-                
-                cell1.innerHTML = count;
-                cell2.innerHTML = "<form class='d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search'>" +
-                        "<div class='input-group'>" +
-                        "<input name='codigoProducto" + count + "' type='text' class='form-control bg-light border-0 small' placeholder='Código del producto...' aria-label='Search' aria-describedby'basic-addon2'>" +
-                        "<div class='input-group-append'>" +
-                        "<button class='btn btn-info' type='button'>" +
-                        "<i class='fas fa-search fa-sm'></i>" +
-                        "</button>" +
-                        "</div>" +
-                        "</div>" +
-                        "</form>";
-                
-                cell5.innerHTML = "<input type='number' class='form-control' min='1' max='5'>";
-                
-                cell7.innerHTML = "<button type='button' class='btn btn-danger btn-sm' onclick='deleteRow(this)'><i class='bi bi-x-lg'></i></button>";
-            }
-
-            function deleteRow(e) {
-                let tableBody = document.getElementById("products-list");
-                let row = e.parentNode.parentNode; // Con "parentNode" navegamos en el DOM para encontrar la fila
-                tableBody.removeChild(row); // Y luego eliminamos la fila del cuerpo de la tabla
-
-                let rows = tableBody.getElementsByTagName("tr"); // calculo cuantos tr hay para hacer los ciclos for en base a ello
-                for (let i = 0; i < rows.length; i++) {
-                    let row = rows[i]; // ingreso a todos los rows
-                    let items = row.getElementsByTagName("td")[0]; // y de todos los rows, ingreso a la primera columna ("items")
-                    items.innerHTML = i + 1; // y todos los items los modifico
-                }
-            }
-        </script>
+        <script src="js/ventasFunciones.js"></script>
 
 
         <%@include file="/componentes/endPage.jsp" %>

@@ -18,6 +18,8 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        
+                        <h4 class="text-center">Iniciar Sesión</h4>
 
                         <%@include file="/componentes/mensaje.jsp" %>
 

@@ -29,7 +29,7 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Ingrese los datos correspondientes</h6>
                             </div>
                             <div class="card-body">
-                                
+
                                 <%@include file="/componentes/mensaje.jsp" %>
 
                                 <form action="SvAgregarProducto" method="POST">
@@ -74,14 +74,13 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text"><i class="bi bi-capsule"></i></div>
                                             </div>
-                                            <%
-                                                List<TipoProducto> tipoProductos = (List) request.getSession().getAttribute("tiposProductos");
+                                            <%                                                List<TipoProducto> tipoProductos = (List) request.getSession().getAttribute("tiposProductos");
                                             %>
                                             <select class="form-control" aria-label="Default select example" id="tipoMedicamento" name="tipoMedicamento" required>
                                                 <option selected>~ Selecciona tipo de medicamento ~</option>
                                                 <% for (TipoProducto tp : tipoProductos) {%>
                                                 <option value="<%=tp.getIdTipoProducto()%>"><%=tp.getDescripcion()%></option>
-                                                <% } %>
+                                                <% }%>
                                             </select>
                                         </div>
                                     </div>
@@ -110,9 +109,21 @@
 
                                     </div>
 
-                                    <div class="form-group" style="margin-top: 5%;">                                                 
-                                        <button type="submit" class="btn btn-success"><i class="bi bi-plus-lg"></i> Agregar</button>
-                                        <button type="reset" class="btn btn-warning"><i class="bi bi-trash2"></i> Limpiar</button>
+                                    <div class="form-group" style="margin-top: 5%;">             
+
+                                        <button type="submit" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </span>
+                                            <span class="text">Agregar</span>
+                                        </button>
+                                        <button type="reset" class="btn btn-warning btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas bi-trash2"></i>
+                                            </span>
+                                            <span class="text">Limpiar</span>
+                                        </button>
+                                        
                                     </div>
 
                                 </form>

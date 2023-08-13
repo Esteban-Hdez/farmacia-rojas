@@ -122,9 +122,20 @@
 
                                     </div>
 
-                                    <div class="form-group" style="margin-top: 5%;">                                                 
-                                        <button type="submit" class="btn btn-success"><i class="bi bi-pencil"></i> Editar</button>
-                                        <button type="reset" class="btn btn-warning"><i class="bi bi-trash2"></i> Limpiar</button>
+                                    <div class="form-group" style="margin-top: 5%;">
+                                        
+                                        <button type="submit" class="btn btn-success btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="bi bi-pencil"></i>
+                                            </span>
+                                            <span class="text">Guardar cambios</span>
+                                        </button>
+                                        <button type="reset" class="btn btn-warning btn-icon-split">
+                                            <span class="icon text-white-50">
+                                                <i class="fas bi-trash2"></i>
+                                            </span>
+                                            <span class="text">Limpiar</span>
+                                        </button>
                                     </div>
 
                                 </form>

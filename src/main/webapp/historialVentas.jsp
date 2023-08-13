@@ -114,7 +114,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Detalles de la venta</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" onclick="vaciarTabla()" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -131,13 +131,7 @@
                                         <th scope="col">Subtotal (Q)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                <tbody id="tbDetalles">
                                 </tbody>
                             </table>
 
@@ -149,7 +143,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        <button type="button" onclick="vaciarTabla()" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -163,15 +157,15 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script>
-            new DataTable('#my-table', {
-                lengthMenu: [
-                    [10, 20, -1],
-                    [10, 20, 'Todos']
-                ],
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
-                }
-            });
+                            new DataTable('#my-table', {
+                                lengthMenu: [
+                                    [10, 20, -1],
+                                    [10, 20, 'Todos']
+                                ],
+                                language: {
+                                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                                }
+                            });
         </script>
 
         <script>
@@ -190,15 +184,45 @@
         <script>
             function obtenerDetalles(index) {
                 // Obtener los datos de productos del backend usando JavaScript
+                let total = 0;
+                let elementTotal = document.getElementById("totalVenta");
+                elementTotal.innerHTML = "0.00"
                 fetch('/Farmaciav1/SvDetalleVenta?index=' + index)
-                    .then(response => response.json()) // Aquí se espera una respuesta JSON
-                    .then(data => {
-                        data.forEach(detalle => {
-                            console.log(detalle.producto.nombre);
-                            console.log(detalle.producto.precio);
-                            console.log(detalle.cantidadVendida);
+                        .then(response => response.json()) // Aquí se espera una respuesta JSON
+                        .then(data => {
+                            data.forEach(detalle => {
+
+                                console.log(detalle.producto.nombre);
+                                console.log(detalle.producto.precio);
+                                console.log(detalle.cantidadVendida);
+
+                                let table = document.getElementById("tbDetalles");
+                                let row = table.insertRow(-1);
+                                let cell0 = row.insertCell(0); //nombre
+                                let cell1 = row.insertCell(1); //precio
+                                let cell2 = row.insertCell(2); //cantidad vendida
+                                let cell3 = row.insertCell(3); //subtotal
+                                
+                                let subtotal = detalle.producto.precio * detalle.cantidadVendida;
+                                
+                                cell0.innerHTML = detalle.producto.nombre;
+                                cell1.innerHTML = detalle.producto.precio;
+                                cell2.innerHTML = detalle.cantidadVendida;
+                                cell3.innerHTML = subtotal.toFixed(2);
+                                
+                                total += subtotal;
+                                
+                            });
+                            console.log(total);
+                            elementTotal.innerHTML = total.toFixed(2);
                         });
-                    });
+                
+            }
+
+            function vaciarTabla(){
+                $("#tbDetalles tr").remove();
+                let elementTotal = document.getElementById("totalVenta");
+                elementTotal.innerHTML = "0.00";
             }
         </script>
 

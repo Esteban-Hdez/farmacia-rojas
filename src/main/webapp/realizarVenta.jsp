@@ -43,6 +43,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">ítem</th>
+                                                <th scope="col">Id</th>
                                                 <th scope="col">Código</th>
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Precio (Q)</th>
@@ -122,6 +123,7 @@
                             <table id="my-table2" class="table">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Código</th>
                                         <th scope="col">Nombre</th>
                                         <th scope="col">Precio (Q)</th>
@@ -133,6 +135,7 @@
                                 <tbody>
                                     <% for (Producto p : productos) {%>
                                     <tr>
+                                        <td><%=p.getIdProducto()%></td>
                                         <td><%=p.getCodigoBarras()%></td>
                                         <td><%=p.getNombre()%></td>
                                         <td><%=p.getPrecio()%></td>

@@ -49,7 +49,7 @@
                                     <table id="my-table" class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">id</th>
+                                                <th scope="col">Id</th>
                                                 <th scope="col">Código</th>
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Fecha de ingreso</th>

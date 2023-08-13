@@ -25,7 +25,7 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">Tabla de ventas realizadas</h6>
-                                
+
                             </div>
                             <div class="card-body">
 
@@ -36,10 +36,8 @@
                                     <table id="my-table" class="table">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Producto</th>
+                                                <th scope="col">Id</th>
                                                 <th scope="col">Fecha de venta</th>
-                                                <th scope="col">Cantidad vendida</th>
                                                 <th scope="col">Total (Q)</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
@@ -47,15 +45,13 @@
                                         <tbody>
                                             <tr>
                                                 <th class="prod-id" scope="row">4545</th>
-                                                <td>Paracetamol</td>
-                                                <td>2023/08/11</td>
-                                                <td>2</td>
-                                                <td>60.26</td>
+                                                <td>2023-08-01 14:30:00</td>
+                                                <td>466.5</td>
                                                 <td>
                                                     <div class="row">
                                                         <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></button>
                                                         &nbsp;
-                                                        <button type="button" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
+                                                        <button type="button" data-toggle="modal" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -99,10 +95,50 @@
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
 
         </div>
         <!-- End of Main Content -->
+
+        <!-- Detalle venta modal -->
+        <div class="modal fade" id="detalleVenta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Detalles de la venta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body container-fluid">
+
+                        <div class="table-responsive" style="margin-top: 2%;">
+
+                            <table id="my-table2" class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Precio (Q)</th>
+                                        <th scope="col">Cantidad Vendida</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <%@include file="/componentes/footer.jsp" %>
 
@@ -120,17 +156,17 @@
                 }
             });
         </script>
-        
-         <script>
-            $(document).ready(function() {
-                
-                $('.btn-delete').click(function(e) {
+
+        <script>
+            $(document).ready(function () {
+
+                $('.btn-delete').click(function (e) {
                     e.preventDefault();
                     const idProd = $(this).closest('tr').find('.prod-id').text();
                     $('#idProductoDlt').val(idProd);
                     $('#deleteProduct').modal('show');
                 })
-                
+
             })
         </script>
 

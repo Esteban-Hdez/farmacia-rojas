@@ -145,14 +145,13 @@
         
         <script>
             $(document).ready(function() {
-                
                 $('.btn-delete').click(function(e) {
                     e.preventDefault();
                     const idProd = $(this).closest('tr').find('.prod-id').text();
                     $('#idProductoDlt').val(idProd);
                     $('#deleteProduct').modal('show');
+                    
                 })
-                
             })
         </script>
 

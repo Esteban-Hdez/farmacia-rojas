@@ -57,8 +57,11 @@ public class Producto {
         this.cantidad = cantidad;
         this.fechaIngreso = fecha_ingreso;
     }
-    
-    
+
+    public Producto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
 
     public String getCodigoBarras() {
         return codigoBarras;

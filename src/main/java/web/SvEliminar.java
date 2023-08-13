@@ -1,11 +1,7 @@
 package web;
 
-import Dominio.Producto;
-import Dominio.TipoProducto;
 import datos.ProductoDAO;
-import datos.TipoProductoDAO;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

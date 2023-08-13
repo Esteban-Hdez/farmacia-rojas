@@ -19,6 +19,14 @@ public class Venta {
         this.totalVenta = totalVenta;
         this.detalles = detalles;
     }
+
+    public Venta(int idVenta, Date fechaVenta, double totalVenta) {
+        this.idVenta = idVenta;
+        this.fechaVenta = fechaVenta;
+        this.totalVenta = totalVenta;
+    }
+    
+    
     
     public Venta(Date fechaVenta) {
         this.fechaVenta = fechaVenta;
@@ -61,6 +69,11 @@ public class Venta {
 
     public void setDetalles(List<DetalleVenta> detalles) {
         this.detalles = detalles;
+    }
+
+    @Override
+    public String toString() {
+        return "Venta{" + "idVenta=" + idVenta + ", fechaVenta=" + fechaVenta + ", totalVenta=" + totalVenta + ", detalles=" + detalles + '}';
     }
 
     

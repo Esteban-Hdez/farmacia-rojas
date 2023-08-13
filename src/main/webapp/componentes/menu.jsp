@@ -56,7 +56,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/Farmaciav1/ServletControlador2">Realizar Venta</a>
-                        <a class="collapse-item" href="/Farmaciav1/historialVentas.jsp">Historial de Ventas</a>
+                        <a class="collapse-item" href="/Farmaciav1/SvVenta">Historial de Ventas</a>
                     </div>
                 </div>
             </li>

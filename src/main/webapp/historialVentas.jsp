@@ -1,3 +1,5 @@
+<%@page import="Dominio.DetalleVenta"%>
+<%@page import="Dominio.Venta"%>
 <%@include file="/componentes/encabezado.jsp" %>
 
 <body id="page-top">
@@ -42,19 +44,24 @@
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
+                                        <%                                            List<Venta> ventas = (List) request.getSession().getAttribute("ventas");
+                                            int index = 0;
+                                        %>
                                         <tbody>
+                                            <% for (Venta v : ventas) {%>
                                             <tr>
-                                                <th class="prod-id" scope="row">4545</th>
-                                                <td>2023-08-01 14:30:00</td>
-                                                <td>466.5</td>
+                                                <th class="prod-id" scope="row"><%=v.getIdVenta()%></th>
+                                                <td><%=v.getFechaVenta()%></td>
+                                                <td><%=v.getTotalVenta()%></td>
                                                 <td>
                                                     <div class="row">
                                                         <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></button>
                                                         &nbsp;
-                                                        <button type="button" data-toggle="modal" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
+                                                        <button id="btnDetalleVenta" type="button" data-toggle="modal" data-id="<%=index%>" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            }%>
                                         </tbody>
                                     </table>
 
@@ -122,17 +129,22 @@
                                         <th scope="col">Subtotal (Q)</th>
                                     </tr>
                                 </thead>
+                                <%                                    List<DetalleVenta> detalleV = ventas.get(index - 1).getDetalles();
+                                %>
                                 <tbody>
+                                    <% for (DetalleVenta dv : detalleV) {%>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><%=dv.getProducto().getNombre()%></td>
+                                        <td><%=dv.getProducto().getPrecio()%></td>
+                                        <td><%=dv.getCantidadVendida()%></td>
+                                        <td><%=dv.getCantidadVendida() * dv.getProducto().getPrecio()%></td>
                                     </tr>
+                                    <%}%>
                                 </tbody>
                             </table>
 
                             <div class="text-right" style="margin-right: 10%; margin-bottom: 1%; margin-top: 5%;">
-                                <span class="h4"><strong>Total:</strong> Q <span id="totalVenta">0.00</span></span>
+                                <span class="h4"><strong>Total:</strong> Q <span id="totalVenta"><%=ventas.get(index - 1).getTotalVenta()%></span></span>
                             </div>
 
                         </div>
@@ -174,6 +186,20 @@
 
             })
         </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.btnDetalleVenta').forEach(function (btnDetalleVenta) {
+                    btnDetalleVenta.addEventListener('click', function () {
+                        var ventaId = this.getAttribute('data-id');
+                        console.log('ID de la venta:', ventaId);
+                        // Aquí puedes usar el ID de la venta para tu lógica
+                    });
+                });
+            });
+        </script>
+
+
 
         <%@include file="/componentes/scripts.jsp" %>
 

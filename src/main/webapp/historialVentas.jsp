@@ -1,3 +1,5 @@
+<%@page import="Dominio.DetalleVenta"%>
+<%@page import="Dominio.Venta"%>
 <%@include file="/componentes/encabezado.jsp" %>
 
 <body id="page-top">
@@ -42,19 +44,26 @@
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
+                                        <%  List<Venta> ventas = (List) request.getSession().getAttribute("ventas");
+                                            int index = 0;
+                                        %>
                                         <tbody>
+                                            <% for (Venta v : ventas) {%>
                                             <tr>
-                                                <th class="prod-id" scope="row">4545</th>
-                                                <td>2023-08-01 14:30:00</td>
-                                                <td>466.5</td>
+                                                <th class="prod-id" scope="row"><%=v.getIdVenta()%></th>
+                                                <td><%=v.getFechaVenta()%></td>
+                                                <td><%=v.getTotalVenta()%></td>
                                                 <td>
                                                     <div class="row">
                                                         <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></button>
                                                         &nbsp;
-                                                        <button type="button" data-toggle="modal" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
+                                                        <button id="btnDetalleVenta" type="button" data-toggle="modal" onclick="obtenerDetalles(<%=v.getIdVenta()%>)" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <%
+                                                    index++;
+                                                }%>
                                         </tbody>
                                     </table>
 
@@ -133,7 +142,7 @@
                             </table>
 
                             <div class="text-right" style="margin-right: 10%; margin-bottom: 1%; margin-top: 5%;">
-                                <span class="h4"><strong>Total:</strong> Q <span id="totalVenta">0.00</span></span>
+                                <span class="h4"><strong>Total:</strong> Q <span id="totalVenta"></span></span>
                             </div>
 
                         </div>
@@ -147,6 +156,8 @@
         </div>
 
         <%@include file="/componentes/footer.jsp" %>
+
+        <%@include file="/componentes/scripts.jsp" %>
 
 
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -176,7 +187,20 @@
             })
         </script>
 
-        <%@include file="/componentes/scripts.jsp" %>
+        <script>
+            function obtenerDetalles(index) {
+                // Obtener los datos de productos del backend usando JavaScript
+                fetch('/Farmaciav1/SvDetalleVenta?index=' + index)
+                    .then(response => response.json()) // Aquí se espera una respuesta JSON
+                    .then(data => {
+                        data.forEach(detalle => {
+                            console.log(detalle.producto.nombre);
+                            console.log(detalle.producto.precio);
+                            console.log(detalle.cantidadVendida);
+                        });
+                    });
+            }
+        </script>
 
         <%@include file="/componentes/endPage.jsp" %>
 

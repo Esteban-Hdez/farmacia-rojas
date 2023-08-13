@@ -1,7 +1,5 @@
 package Dominio;
 
-import java.util.Date;
-
 public class Producto {
     private int idProducto;
     private String codigoBarras;
@@ -49,6 +47,19 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
         this.idTipo = idTipo;
         this.cantidad = cantidad;
+        this.precio = precio;
+    }
+
+    public Producto(int idProducto, String codigoBarras, String nombre, int cantidad, String fecha_ingreso) {
+        this.idProducto = idProducto;
+        this.codigoBarras = codigoBarras;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.fechaIngreso = fecha_ingreso;
+    }
+
+    public Producto(String nombre, double precio) {
+        this.nombre = nombre;
         this.precio = precio;
     }
 
@@ -126,6 +137,6 @@ public class Producto {
 
     @Override
     public String toString() {
-        return "Producto{" + "idProducto=" + idProducto + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", fechaIngreso=" + fechaIngreso + ", fechaVencimiento=" + fechaVencimiento + ", tipo=" + idTipo + ", cantidad=" + cantidad + ", precio=" + precio + '}';
+        return "\nProducto{" + "idProducto=" + idProducto + ", codigoBarras=" + codigoBarras + ", nombre=" + nombre + ", fechaIngreso=" + fechaIngreso + ", fechaVencimiento=" + fechaVencimiento + ", tipo=" + idTipo + ", cantidad=" + cantidad + ", precio=" + precio + '}';
     }
 }

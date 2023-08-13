@@ -31,8 +31,10 @@ public class DetalleVenta {
     public void setCantidadVendida(int cantidadVendida) {
         this.cantidadVendida = cantidadVendida;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "DetalleVenta{" + "producto=" + producto + ", cantidadVendida=" + cantidadVendida + '}';
+    }
     
 }

@@ -3,6 +3,7 @@ package datos;
 import Dominio.Producto;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class ProductoDAO {
@@ -15,8 +16,25 @@ public class ProductoDAO {
     private static final String SQL_SELECT_PRODUCTO_BY_ID = "SELECT * FROM Producto WHERE id_producto = ?";
     private static final String SQL_UPDATE_PRODUCTO = "UPDATE Producto SET codigo_barras = ?, nombre = ?, fecha_ingreso = ?, fecha_vencimiento = ?, id_tipo_producto = ?, cantidad = ?, precio = ? WHERE id_producto = ?";
     private static final String SQL_DELETE_PRODUCTO = "DELETE FROM Producto WHERE id_producto = ?";
-    
+
     private static final String SQL_SELECT_PRODUCTOS_FILTRADOS = "SELECT * FROM Producto WHERE codigo_barras = ? OR nombre LIKE ?";
+
+    private static final String SQL_PRODUCTO_MAS_VENDIDO = "SELECT p.id_producto, p.codigo_barras, p.nombre, SUM(dv.cantidad_vendida) AS cantidad, p.fecha_ingreso "
+            + "FROM Producto p JOIN Detalle_Venta dv ON p.id_producto = dv.id_producto "
+            + "GROUP BY p.id_producto, p.nombre ORDER BY cantidad DESC LIMIT 1";
+    private static final String SQL_PRODUCTO_MAS_VENDIDO_MES = "SELECT p.id_producto, p.codigo_barras, p.nombre, SUM(dv.cantidad_vendida) AS cantidad, p.fecha_ingreso\n"
+            + "FROM Producto p\n"
+            + "JOIN Detalle_Venta dv ON p.id_producto = dv.id_producto\n"
+            + "JOIN Venta v ON dv.id_venta = v.id_venta\n"
+            + "WHERE MONTH(v.fecha_hora) = MONTH(CURDATE()) AND YEAR(v.fecha_hora) = YEAR(CURDATE())\n"
+            + "GROUP BY p.id_producto\n"
+            + "ORDER BY cantidad DESC\n"
+            + "LIMIT 1;";
+    private static final String SQL_PRODUCTO_MENOS_VENDIDO = "SELECT p.id_producto, p.codigo_barras, p.nombre, SUM(dv.cantidad_vendida) AS cantidad, p.fecha_ingreso "
+            + "FROM Producto p JOIN Detalle_Venta dv ON p.id_producto = dv.id_producto "
+            + "GROUP BY p.id_producto, p.nombre ORDER BY cantidad ASC LIMIT 1";
+    private static final String SQL_PRODUCTO_MAS_TIEMPO_EN_STOCK = "SELECT * FROM Producto "
+            + "ORDER BY DATEDIFF(NOW(), fecha_ingreso) DESC LIMIT 1";
 
     // Métodos y lógica para acceder a la base de datos y ejecutar las consultas
     // Método para listar todos los productos
@@ -65,7 +83,7 @@ public class ProductoDAO {
     // Método para recuperar un producto por su id
     public Producto obtenerProductoPorId(int id) {
         Producto producto = null;
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -218,11 +236,11 @@ public class ProductoDAO {
 
         return eliminado;
     }
-    
+
     // Método para obtener productos filtrados por código de barras y nombre nuevo
     public List<Producto> listarProductosFiltrados(String codigoBarras, String nombre) {
         List<Producto> listaProductos = new ArrayList<>();
-        
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -261,6 +279,77 @@ public class ProductoDAO {
         }
 
         return listaProductos;
+    }
+
+    // Método para obtener estadísticas de productos
+    public List<Producto> obtenerEstadisticasProductos() {
+        List<Producto> estadisticasProductos = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = Conexion.getConnection();
+
+            // Consulta para el producto más vendido
+            ps = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Producto masVendido = crearProductoDesdeResultSet(rs);
+                estadisticasProductos.add(masVendido);
+            }
+
+            // Consulta para el producto más vendido por mes
+            ps = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO_MES);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Producto masVendidoMes = crearProductoDesdeResultSet(rs);
+                estadisticasProductos.add(masVendidoMes);
+            }
+
+            // Consulta para el producto menos vendido
+            ps = conn.prepareStatement(SQL_PRODUCTO_MENOS_VENDIDO);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Producto menosVendido = crearProductoDesdeResultSet(rs);
+                estadisticasProductos.add(menosVendido);
+            }
+
+            // Consulta para el producto con más tiempo en stock
+            ps = conn.prepareStatement(SQL_PRODUCTO_MAS_TIEMPO_EN_STOCK);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Producto masTiempoEnStock = crearProductoDesdeResultSet(rs);
+                estadisticasProductos.add(masTiempoEnStock);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        } finally {
+            Conexion.close(rs);
+            Conexion.close(ps);
+            Conexion.close(conn);
+        }
+
+        return estadisticasProductos;
+    }
+
+    // Método para crear un objeto Producto a partir de un ResultSet
+    private Producto crearProductoDesdeResultSet(ResultSet rs) throws SQLException {
+        int idProducto = rs.getInt("id_producto");
+        String codigoBarras = rs.getString("codigo_barras");
+        String nombre = rs.getString("nombre");
+        int cantidad = rs.getInt("cantidad"); //total vendido
+        String fecha_ingreso = rs.getString("fecha_ingreso");
+
+        return new Producto(idProducto, codigoBarras, nombre, cantidad, fecha_ingreso);
+    }
+
+    // Método para obtener el mes actual
+    private int obtenerMesActual() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MONTH) + 1; // Sumar 1 porque los meses en Calendar son base 0
     }
 
 }

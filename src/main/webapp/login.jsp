@@ -23,7 +23,7 @@
 
                         <%@include file="/componentes/mensaje.jsp" %>
 
-                        <form action="action">
+                        <form action="SvLogin" method="POST">
 
                             <div class="form-group">
                                 <label for="userLabel">Usuario</label>
@@ -41,7 +41,7 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="bi bi-key-fill"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" id="passLabel" name="cotrasenna" placeholder="" required>
+                                    <input type="password" class="form-control" id="passLabel" name="contrasenna" placeholder="" required>
                                 </div>
                             </div>
 

@@ -17,7 +17,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="/Farmaciav1">
+                <a class="nav-link" href="/Farmaciav1/inicio.jsp">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -56,7 +56,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/Farmaciav1/ServletControlador2">Realizar Venta</a>
-                        <a class="collapse-item" href="/Farmaciav1/historialVentas.jsp">Historial de Ventas</a>
+                            <a class="collapse-item" href="/Farmaciav1/SvVenta">Historial de Ventas</a>
                     </div>
                 </div>
             </li>

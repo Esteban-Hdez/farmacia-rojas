@@ -74,7 +74,7 @@
                                                     <div class="row">
                                                         <a href="SvEditar?id_producto=<%=p.getIdProducto()%>" class="btn btn-warning btn-sm btn-circle" role="button" aria-pressed="true"><i class="bi bi-pencil"></i></a>
                                                         &nbsp;
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></a>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i>
                                                     </div>
                                                 </td>
                                             </tr>

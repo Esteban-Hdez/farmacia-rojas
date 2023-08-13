@@ -1,4 +1,10 @@
+<%@page import="java.util.List"%>
+<%@page import="Dominio.Producto"%>
 <!-- Earnings (Monthly) Card Example -->
+
+<%
+    List<Producto> productosEstadiscas = (List) request.getSession().getAttribute("productosEstadisticos");
+%>
 <div class="mb-4 col">
     <div class="card border-left-success shadow h-100 py-2">
         <div class="card-body" style="display: grid;">
@@ -9,10 +15,10 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Paracetamol</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(0).getNombre()%></div>
                         </div>
                         <div class="col">
-                            <div class="h6 mb-0 mr-3">45 ventas</div>
+                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(0).getCantidad() + " ventas"%></div>
                         </div>
                     </div>
                 </div>
@@ -35,10 +41,10 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Paracetamol</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(1).getNombre()%></div>
                         </div>
                         <div class="col">
-                            <div class="h6 mb-0 mr-3">45 ventas</div>
+                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(1).getCantidad() + " ventas"%></div>
                         </div>
                     </div>
                 </div>
@@ -61,10 +67,10 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Paracetamol</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(2).getNombre()%></div>
                         </div>
                         <div class="col">
-                            <div class="h6 mb-0 mr-3">45 ventas</div>
+                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(2).getCantidad() + " ventas"%></div>
                         </div>
                     </div>
                 </div>
@@ -87,7 +93,7 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Paracetamol</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(3).getNombre()%></div>
                         </div>
                     </div>
                 </div>

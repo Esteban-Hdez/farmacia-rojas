@@ -56,9 +56,9 @@
 
                                         </tbody>
                                     </table>
-                                    
+
                                     <div class="text-right" style="margin-right: 10%; margin-bottom: 1%; margin-top: 5%;">
-                                        <button type="button" class="btn btn-success btn-icon-split btn-lg" style="margin-right: 5%;">
+                                        <button type="button" onclick="realizarVenta()" class="btn btn-success btn-icon-split btn-lg" style="margin-right: 5%;">
                                             <span class="icon text-white-50">
                                                 <i class="bi bi-cart-check"></i>
                                             </span>
@@ -117,7 +117,7 @@
                         </div>
 
                         <div class="table-responsive" style="margin-top: 2%;">
-                            
+
                             <h3 id="searchMsg">Sin resultados</h3>
 
                             <table id="my-table2" class="table">
@@ -157,13 +157,22 @@
                 </div>
             </div>
         </div>
+        
+        <!<!-- Toast -->
+        <div aria-live="polite" aria-atomic="true" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+
+            <div id="toast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+                <div id="msgToast" class="toast-body">
+                </div>
+            </div>
+            
+        </div>
 
         <%@include file="/componentes/footer.jsp" %>
 
         <%@include file="/componentes/scripts.jsp" %>
 
         <script src="js/ventasFunciones.js"></script>
-
 
         <%@include file="/componentes/endPage.jsp" %>
 

@@ -54,7 +54,7 @@
                                                 <th scope="col">Nombre</th>
                                                 <th scope="col">Fecha de ingreso</th>
                                                 <th scope="col">Fecha de vencimiento</th>
-                                                <th scope="col">Precio</th>
+                                                <th scope="col">Precio (Q)</th>
                                                 <th scope="col">Cantidad</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
@@ -68,13 +68,13 @@
                                                 <td><%=p.getNombre()%></td>
                                                 <td><%=p.getFechaIngreso()%></td>
                                                 <td><%=p.getFechaVencimiento()%></td>
-                                                <td><%="Q " + p.getPrecio()%></td>
+                                                <td><%=p.getPrecio()%></td>
                                                 <td><%=p.getCantidad()%></td>
                                                 <td>
                                                     <div class="row">
-                                                        <a href="SvEditar?id_producto=<%=p.getIdProducto()%>" class="btn btn-warning btn-sm" role="button" aria-pressed="true"><i class="bi bi-pencil"></i></a>
+                                                        <a href="SvEditar?id_producto=<%=p.getIdProducto()%>" class="btn btn-warning btn-sm btn-circle" role="button" aria-pressed="true"><i class="bi bi-pencil"></i></a>
                                                         &nbsp;
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete"><i class="bi bi-trash"></i></a>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></a>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -36,23 +36,26 @@
                                     <table id="my-table" class="table">
                                         <thead>
                                             <tr>
+                                                <th scope="col">#</th>
                                                 <th scope="col">Producto</th>
                                                 <th scope="col">Fecha de venta</th>
                                                 <th scope="col">Cantidad vendida</th>
-                                                <th scope="col">Total</th>
+                                                <th scope="col">Total (Q)</th>
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                
+                                                <th class="prod-id" scope="row">4545</th>
                                                 <td>Paracetamol</td>
                                                 <td>2023/08/11</td>
                                                 <td>2</td>
-                                                <td>Q 60.26</td>
+                                                <td>60.26</td>
                                                 <td>
                                                     <div class="row">
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete"><i class="bi bi-trash"></i></a>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></button>
+                                                        &nbsp;
+                                                        <button type="button" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -116,6 +119,19 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
                 }
             });
+        </script>
+        
+         <script>
+            $(document).ready(function() {
+                
+                $('.btn-delete').click(function(e) {
+                    e.preventDefault();
+                    const idProd = $(this).closest('tr').find('.prod-id').text();
+                    $('#idProductoDlt').val(idProd);
+                    $('#deleteProduct').modal('show');
+                })
+                
+            })
         </script>
 
         <%@include file="/componentes/scripts.jsp" %>

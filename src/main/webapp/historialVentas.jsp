@@ -119,6 +119,7 @@
                                         <th scope="col">Producto</th>
                                         <th scope="col">Precio (Q)</th>
                                         <th scope="col">Cantidad Vendida</th>
+                                        <th scope="col">Subtotal (Q)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,6 +130,10 @@
                                     </tr>
                                 </tbody>
                             </table>
+
+                            <div class="text-right" style="margin-right: 10%; margin-bottom: 1%; margin-top: 5%;">
+                                <span class="h4"><strong>Total:</strong> Q <span id="totalVenta">0.00</span></span>
+                            </div>
 
                         </div>
 

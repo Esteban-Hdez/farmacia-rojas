@@ -19,7 +19,7 @@ public class SvDashboard extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Producto> productos = new ProductoDAO().obtenerEstadisticasProductos();
-        System.out.println("productos: "+productos);
+//        System.out.println("productos: "+productos);
         
         HttpSession misesion = request.getSession();
         misesion.setAttribute("productosEstadisticos", productos);

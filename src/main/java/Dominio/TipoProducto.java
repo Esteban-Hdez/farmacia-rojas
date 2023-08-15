@@ -1,6 +1,8 @@
 package Dominio;
 
-public class TipoProducto {
+import java.io.Serializable;
+
+public class TipoProducto implements Serializable{
     private int idTipoProducto;
     private String descripcion;
 

@@ -44,7 +44,7 @@
                                                 <th scope="col">Acciones</th>
                                             </tr>
                                         </thead>
-                                        <%  List<Venta> ventas = (List) request.getSession().getAttribute("ventas");
+                                        <%                                            List<Venta> ventas = (List) request.getSession().getAttribute("ventas");
                                             int index = 0;
                                         %>
                                         <tbody>
@@ -55,7 +55,10 @@
                                                 <td><%=v.getTotalVenta()%></td>
                                                 <td>
                                                     <div class="row">
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete btn-circle"><i class="bi bi-trash"></i></button>
+                                                        <button type="button" class="btn btn-danger btn-sm btn-delete-venta btn-circle"
+                                                                data-venta-id="<%= v.getIdVenta()%>">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
                                                         &nbsp;
                                                         <button id="btnDetalleVenta" type="button" data-toggle="modal" onclick="obtenerDetalles(<%=v.getIdVenta()%>)" data-target="#detalleVenta" class="btn btn-info btn-sm btn-circle"><i class="bi bi-eye-fill"></i></button>
                                                     </div>
@@ -67,20 +70,20 @@
                                         </tbody>
                                     </table>
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="deleteProduct" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteProduct" aria-hidden="true">
+                                    <!-- Modal de confirmación de eliminación de venta -->
+                                    <div class="modal fade" id="deleteVentaModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteVentaLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteProduct"><i class="bi bi-trash text-danger"></i>&nbsp;&nbsp;Eliminar Producto</h5>
+                                                    <h5 class="modal-title" id="deleteVentaLabel"><i class="bi bi-trash text-danger"></i>&nbsp;&nbsp;Eliminar Venta</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form action="SvEliminar" method="POST">
+                                                <form id="deleteVentaForm" method="POST">
                                                     <div class="modal-body">
-                                                        <input type="hidden" name="idProducto" id="idProductoDlt">
-                                                        ¿Estas seguro que deseas eliminar este producto?
+                                                        <input type="hidden" name="idVenta" id="idVentaToDelete">
+                                                        ¿Estás seguro de que deseas eliminar esta venta?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -90,6 +93,7 @@
                                             </div>
                                         </div>
                                     </div>
+
 
                                 </div>
 
@@ -157,28 +161,25 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script>
-            new DataTable('#my-table', {
-                lengthMenu: [
-                    [10, 20, -1],
-                    [10, 20, 'Todos']
-                ],
-                language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
-                }
-            });
+                            new DataTable('#my-table', {
+                                lengthMenu: [
+                                    [10, 20, -1],
+                                    [10, 20, 'Todos']
+                                ],
+                                language: {
+                                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                                }
+                            });
         </script>
 
         <script>
             $(document).ready(function () {
-
-                $('.btn-delete').click(function (e) {
-                    e.preventDefault();
-                    const idProd = $(this).closest('tr').find('.prod-id').text();
-                    $('#idProductoDlt').val(idProd);
-                    $('#deleteProduct').modal('show');
-                })
-
-            })
+                $('.btn-delete-venta').click(function () {
+                    const ventaId = $(this).data('venta-id');
+                    $('#idVentaToDelete').val(ventaId);
+                    $('#deleteVentaModal').modal('show');
+                });
+            });
         </script>
 
         <script>
@@ -202,24 +203,24 @@
                                 let cell1 = row.insertCell(1); //precio
                                 let cell2 = row.insertCell(2); //cantidad vendida
                                 let cell3 = row.insertCell(3); //subtotal
-                                
+
                                 let subtotal = detalle.producto.precio * detalle.cantidadVendida;
-                                
+
                                 cell0.innerHTML = detalle.producto.nombre;
                                 cell1.innerHTML = detalle.producto.precio;
                                 cell2.innerHTML = detalle.cantidadVendida;
                                 cell3.innerHTML = subtotal.toFixed(2);
-                                
+
                                 total += subtotal;
-                                
+
                             });
                             console.log(total);
                             elementTotal.innerHTML = total.toFixed(2);
                         });
-                
+
             }
 
-            function vaciarTabla(){
+            function vaciarTabla() {
                 $("#tbDetalles tr").remove();
                 let elementTotal = document.getElementById("totalVenta");
                 elementTotal.innerHTML = "0.00";

@@ -1,26 +1,26 @@
 package Dominio;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Venta {
+public class Venta implements Serializable{
     private int idVenta;
-    private Date fechaVenta;
+    private String fechaVenta;
     private double totalVenta;
     private List<DetalleVenta> detalles;
 
     public Venta() {
     }
 
-    public Venta(int idVenta, Date fechaVenta, double totalVenta, List<DetalleVenta> detalles) {
+    public Venta(int idVenta, String fechaVenta, double totalVenta, List<DetalleVenta> detalles) {
         this.idVenta = idVenta;
         this.fechaVenta = fechaVenta;
         this.totalVenta = totalVenta;
         this.detalles = detalles;
     }
 
-    public Venta(int idVenta, Date fechaVenta, double totalVenta) {
+    public Venta(int idVenta, String fechaVenta, double totalVenta) {
         this.idVenta = idVenta;
         this.fechaVenta = fechaVenta;
         this.totalVenta = totalVenta;
@@ -28,7 +28,7 @@ public class Venta {
     
     
     
-    public Venta(Date fechaVenta) {
+    public Venta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
         this.totalVenta = 0;
         this.detalles = new ArrayList<>();
@@ -47,11 +47,11 @@ public class Venta {
         this.idVenta = idVenta;
     }
 
-    public Date getFechaVenta() {
+    public String getFechaVenta() {
         return fechaVenta;
     }
 
-    public void setFechaVenta(Date fechaVenta) {
+    public void setFechaVenta(String fechaVenta) {
         this.fechaVenta = fechaVenta;
     }
 

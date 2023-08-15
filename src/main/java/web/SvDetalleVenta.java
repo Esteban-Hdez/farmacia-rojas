@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
-import datos.DetalleVentaDAO;
-import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "SvDetalleVenta", urlPatterns = {"/SvDetalleVenta"})
 public class SvDetalleVenta extends HttpServlet {
@@ -22,8 +20,9 @@ public class SvDetalleVenta extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int index = Integer.parseInt(request.getParameter("index"));
-        List<Venta> ventas = new VentaDAO().listarTodasLasVentas();
-        List<DetalleVenta> detalleV = new DetalleVentaDAO().obtenerDetalleVentaPorIdVenta(index);
+        System.out.println("index: "+index);
+        Venta venta = new VentaDAO().buscarVentaPorId(index);
+        List<DetalleVenta> detalleV = venta.getDetalles();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         

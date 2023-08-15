@@ -41,17 +41,11 @@ public class ProductoDAO {
     public List<Producto> listarTodosLosProductos() {
         List<Producto> listaProductos = new ArrayList<>();
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        // Inicializar la conexión y el PreparedStatement
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS);
-            rs = ps.executeQuery();
-
-            // Iterar a través de los resultados y agregar los productos a la lista
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS); ResultSet rs = ps.executeQuery()) {
+            // Realizar operaciones con el ResultSet
             while (rs.next()) {
                 int idProducto = rs.getInt("id_producto");
                 String codigoBarras = rs.getString("codigo_barras");
@@ -66,17 +60,46 @@ public class ProductoDAO {
                 Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
                 listaProductos.add(producto);
             }
-
         } catch (SQLException e) {
-            // Manejar excepciones
             e.printStackTrace(System.out);
-        } finally {
-            Conexion.close(rs);
-            Conexion.close(ps);
-            Conexion.close(conn);
-
         }
 
+//        // Inicializar la conexión y el PreparedStatement
+//        try {
+//            conn = Conexion.getConnection();
+//            ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS);
+//            rs = ps.executeQuery();
+//
+//            // Iterar a través de los resultados y agregar los productos a la lista
+//            while (rs.next()) {
+//                int idProducto = rs.getInt("id_producto");
+//                String codigoBarras = rs.getString("codigo_barras");
+//                String nombre = rs.getString("nombre");
+//                String fechaIngreso = rs.getString("fecha_ingreso");
+//                String fechaVencimiento = rs.getString("fecha_vencimiento");
+//                String idTipoProducto = rs.getString("descripcion");
+//                int cantidad = rs.getInt("cantidad");
+//                double precio = rs.getDouble("precio");
+//
+//                // Crear un objeto Producto y agregarlo a la lista
+//                Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
+//                listaProductos.add(producto);
+//            }
+//
+//        } catch (SQLException e) {
+//            // Manejar excepciones
+//            e.printStackTrace(System.out);
+//        } finally {
+//            if (rs != null) {
+//                Conexion.close(rs);
+//            }
+//            if (ps != null) {
+//                Conexion.close(ps);
+//            }
+//            if (conn != null) {
+//                Conexion.close(conn);
+//            }
+//        }
         return listaProductos;
     }
 
@@ -114,9 +137,15 @@ public class ProductoDAO {
             // Manejar excepciones
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (rs != null) {
+                Conexion.close(rs);
+            }
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return producto;
@@ -155,8 +184,12 @@ public class ProductoDAO {
             // Manejar excepciones
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return insertado;
@@ -196,8 +229,12 @@ public class ProductoDAO {
             // Manejar excepciones
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return actualizado;
@@ -230,8 +267,12 @@ public class ProductoDAO {
             // Manejar excepciones
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return eliminado;
@@ -273,9 +314,15 @@ public class ProductoDAO {
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (rs != null) {
+                Conexion.close(rs);
+            }
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return listaProductos;
@@ -327,9 +374,15 @@ public class ProductoDAO {
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(ps);
-            Conexion.close(conn);
+            if (rs != null) {
+                Conexion.close(rs);
+            }
+            if (ps != null) {
+                Conexion.close(ps);
+            }
+            if (conn != null) {
+                Conexion.close(conn);
+            }
         }
 
         return estadisticasProductos;
@@ -344,12 +397,6 @@ public class ProductoDAO {
         String fecha_ingreso = rs.getString("fecha_ingreso");
 
         return new Producto(idProducto, codigoBarras, nombre, cantidad, fecha_ingreso);
-    }
-
-    // Método para obtener el mes actual
-    private int obtenerMesActual() {
-        Calendar cal = Calendar.getInstance();
-        return cal.get(Calendar.MONTH) + 1; // Sumar 1 porque los meses en Calendar son base 0
     }
 
 }

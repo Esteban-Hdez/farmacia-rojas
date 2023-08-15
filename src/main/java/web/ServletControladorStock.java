@@ -20,13 +20,11 @@ public class ServletControladorStock extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Producto> productos = new ProductoDAO().listarTodosLosProductos();
-        List<TipoProducto> tiposProductos = new TipoProductoDAO().listarTiposProductos();
-        System.out.println("doGet");
-        System.out.println("productos: "+ productos);
+        //List<TipoProducto> tiposProductos = new TipoProductoDAO().listarTiposProductos();
         
         HttpSession misesion = request.getSession();
         misesion.setAttribute("productos", productos);
-        misesion.setAttribute("tiposProductos", tiposProductos);
+        //misesion.setAttribute("tiposProductos", tiposProductos);
         
         response.sendRedirect("stock.jsp");
     }

@@ -142,17 +142,17 @@
         </script>
 
         <%@include file="/componentes/scripts.jsp" %>
-        
+
         <script>
-            $(document).ready(function() {
-                $('.btn-delete').click(function(e) {
+            $(document).ready(function () {
+                $('.btn-delete').click(function (e) {
                     e.preventDefault();
                     const idProd = $(this).closest('tr').find('.prod-id').text();
                     $('#idProductoDlt').val(idProd);
                     $('#deleteProduct').modal('show');
-                    
-                })
-            })
+
+                });
+            });
         </script>
 
         <%@include file="/componentes/endPage.jsp" %>

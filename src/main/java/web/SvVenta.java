@@ -17,8 +17,8 @@ public class SvVenta extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Venta> ventas = new VentaDAO().listarTodasLasVentas();
-        System.out.println(ventas);
+        List<Venta> ventas = new VentaDAO().obtenerVentasConDetalles();
+//        System.out.println(ventas);
         HttpSession misesion = request.getSession();
         misesion.setAttribute("ventas", ventas);
         
@@ -28,6 +28,6 @@ public class SvVenta extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 }

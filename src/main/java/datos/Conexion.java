@@ -10,7 +10,7 @@ public class Conexion {
     private static final String JDBC_DRIVER_CLASS_NAME="com.mysql.cj.jdbc.Driver";
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/farmacia_rojas?useSSL=false&useTimeZone=true&serverTimeZone=UTC&allowPublicKeyRetrieval=true";
     private static final String JDBC_USER = "root";
-    private static final String JDBC_PASSWORD = "root";
+    private static final String JDBC_PASSWORD = "admin";
 
     public static DataSource getDataSource() {
         BasicDataSource ds = new BasicDataSource();
@@ -19,6 +19,7 @@ public class Conexion {
         ds.setUsername(JDBC_USER);
         ds.setPassword(JDBC_PASSWORD);
         ds.setInitialSize(50);
+        //ds.setMaxTotal(100);
         return ds;
     }
 

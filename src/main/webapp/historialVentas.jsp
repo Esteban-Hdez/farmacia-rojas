@@ -157,14 +157,14 @@
 
         <%@include file="/componentes/footer.jsp" %>
 
-       
+
 
 
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        
+
         <script>
-            new DataTable('#my-table', {
+            let table = new DataTable('#my-table', {
                 lengthMenu: [
                     [10, 20, -1],
                     [10, 20, 'Todos']
@@ -173,11 +173,22 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
                 }
             });
+            table.on('click', '.btn-delete-venta', function (e) {
+                e.preventDefault();
+                const ventaId = $(this).closest('tr').find('.venta-id').text();
+                const ventaFecha = $(this).closest('tr').find('.venta-fecha').text();
+                const ventaTotal = $(this).closest('tr').find('.venta-total').text();
+                $('#idVentaToDelete').val(ventaId);
+                $('#idVentaMsg span').html(ventaId);
+                $('#fechaVentaMsg span').html(ventaFecha);
+                $('#totalVentaMsg span').html(ventaTotal);
+                $('#deleteVentaModal').modal('show');
+            });
         </script>
-        
+
         <%@include file="/componentes/scripts.jsp" %>
 
-        <script>
+        <!--<script>
             $(document).ready(function () {
                 $('.btn-delete-venta').click(function (e) {
                     e.preventDefault();
@@ -191,7 +202,7 @@
                     $('#deleteVentaModal').modal('show');
                 });
             });
-        </script>
+        </script>-->
 
         <script>
             function obtenerDetalles(index) {

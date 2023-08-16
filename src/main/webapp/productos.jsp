@@ -64,7 +64,7 @@
                                             <% for (Producto p : productos) {%>
                                             <tr>
                                                 <th class="prod-id" scope="row"><%=p.getIdProducto()%></th>
-                                                <td><%=p.getCodigoBarras()%></td>
+                                                <td class="prod-code"><%=p.getCodigoBarras()%></td>
                                                 <td class="prod-nom"><%=p.getNombre()%></td>
                                                 <td><%=p.getFechaIngreso()%></td>
                                                 <td><%=p.getFechaVencimiento()%></td>
@@ -98,6 +98,7 @@
                                                         <h5>¿Estás seguro de que deseas eliminar este producto?</h5>
                                                         <br>
                                                         <h6 id="idProductMsg">Número de producto: <strong><span></span></strong></h6>
+                                                        <h6 id="codeProductMsg">Código de barras: <strong><span></span></strong></h6>
                                                         <h6 id="nomProductoMsg">Nombre del producto: <strong><span></span></strong></h6>
                                                     </div>
                                                     <div class="modal-footer">
@@ -133,7 +134,7 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script>
-            new DataTable('#my-table', {
+            let table =new DataTable('#my-table', {
                 lengthMenu: [
                     [10, 20, -1],
                     [10, 20, 'Todos']
@@ -142,11 +143,22 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
                 }
             });
+            table.on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                const idProd = $(this).closest('tr').find('.prod-id').text();
+                const nombreProducto = $(this).closest('tr').find('.prod-nom').text();
+                const codigoProducto = $(this).closest('tr').find('.prod-code').text();
+                $('#idProductoDlt').val(idProd);
+                $('#idProductMsg span').html(idProd);
+                $('#codeProductMsg span').html(codigoProducto);
+                $('#nomProductoMsg span').html(nombreProducto);
+                $('#deleteProduct').modal('show');
+            });
         </script>
 
         <%@include file="/componentes/scripts.jsp" %>
 
-        <script>
+        <!--<script>
             $(document).ready(function () {
                 $('.btn-delete').click(function (e) {
                     e.preventDefault();
@@ -158,7 +170,7 @@
                     $('#deleteProduct').modal('show');
                 });
             });
-        </script>
+        </script>-->
 
         <%@include file="/componentes/endPage.jsp" %>
 

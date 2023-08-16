@@ -103,7 +103,7 @@
                                                 <div class="input-group-prepend">
                                                     <div class="input-group-text">Q</div>
                                                 </div>
-                                                <input type="number" class="form-control" id="precio" name="precio" placeholder="" required>
+                                                <input type="number" step="0.01" class="form-control" id="precio" name="precio" placeholder="" required>
                                             </div>
                                         </div>
 

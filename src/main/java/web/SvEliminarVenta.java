@@ -1,7 +1,8 @@
 package web;
 
-import datos.ProductoDAO;
+import datos.VentaDAO;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,12 +32,16 @@ public class SvEliminarVenta extends HttpServlet{
         
         System.out.println("Id venta obtenido: " + idVenta);
         
-        //boolean eliminado = false;
-        //eliminado = new ProductoDAO().eliminarProducto(idProducto);
+        boolean eliminado = false;
+        try {
+            eliminado = new VentaDAO().cancelarVenta(idVenta);
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
         
         HttpSession session = request.getSession();
         
-        if(true){
+        if(eliminado){
             System.out.println("Venta eliminada con exito.");
             session.setAttribute("mensaje", "La venta fue eliminada exitosamente.");
             session.setAttribute("style", "success");

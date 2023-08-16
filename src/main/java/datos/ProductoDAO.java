@@ -3,7 +3,6 @@ package datos;
 import Dominio.Producto;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class ProductoDAO {
@@ -41,9 +40,6 @@ public class ProductoDAO {
     public List<Producto> listarTodosLosProductos() {
         List<Producto> listaProductos = new ArrayList<>();
 
-//        Connection conn = null;
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
         try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS); ResultSet rs = ps.executeQuery()) {
             // Realizar operaciones con el ResultSet
             while (rs.next()) {
@@ -64,42 +60,6 @@ public class ProductoDAO {
             e.printStackTrace(System.out);
         }
 
-//        // Inicializar la conexión y el PreparedStatement
-//        try {
-//            conn = Conexion.getConnection();
-//            ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS);
-//            rs = ps.executeQuery();
-//
-//            // Iterar a través de los resultados y agregar los productos a la lista
-//            while (rs.next()) {
-//                int idProducto = rs.getInt("id_producto");
-//                String codigoBarras = rs.getString("codigo_barras");
-//                String nombre = rs.getString("nombre");
-//                String fechaIngreso = rs.getString("fecha_ingreso");
-//                String fechaVencimiento = rs.getString("fecha_vencimiento");
-//                String idTipoProducto = rs.getString("descripcion");
-//                int cantidad = rs.getInt("cantidad");
-//                double precio = rs.getDouble("precio");
-//
-//                // Crear un objeto Producto y agregarlo a la lista
-//                Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
-//                listaProductos.add(producto);
-//            }
-//
-//        } catch (SQLException e) {
-//            // Manejar excepciones
-//            e.printStackTrace(System.out);
-//        } finally {
-//            if (rs != null) {
-//                Conexion.close(rs);
-//            }
-//            if (ps != null) {
-//                Conexion.close(ps);
-//            }
-//            if (conn != null) {
-//                Conexion.close(conn);
-//            }
-//        }
         return listaProductos;
     }
 
@@ -107,45 +67,25 @@ public class ProductoDAO {
     public Producto obtenerProductoPorId(int id) {
         Producto producto = null;
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_SELECT_PRODUCTO_BY_ID)) {
 
-        // Inicializar la conexión y el PreparedStatement
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_SELECT_PRODUCTO_BY_ID);
             ps.setInt(1, id);
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int idProducto = rs.getInt("id_producto");
+                    String codigoBarras = rs.getString("codigo_barras");
+                    String nombre = rs.getString("nombre");
+                    String fechaIngreso = rs.getString("fecha_ingreso");
+                    String fechaVencimiento = rs.getString("fecha_vencimiento");
+                    int idTipoProducto = rs.getInt("id_tipo_producto");
+                    int cantidad = rs.getInt("cantidad");
+                    double precio = rs.getDouble("precio");
 
-            // Verificar si se encontró un producto con el id proporcionado
-            if (rs.next()) {
-                int idProducto = rs.getInt("id_producto");
-                String codigoBarras = rs.getString("codigo_barras");
-                String nombre = rs.getString("nombre");
-                String fechaIngreso = rs.getString("fecha_ingreso");
-                String fechaVencimiento = rs.getString("fecha_vencimiento");
-                int idTipoProducto = rs.getInt("id_tipo_producto");
-                int cantidad = rs.getInt("cantidad");
-                double precio = rs.getDouble("precio");
-
-                // Crear un objeto Producto con la información obtenida
-                producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
+                    producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
+                }
             }
-
         } catch (SQLException e) {
-            // Manejar excepciones
             e.printStackTrace(System.out);
-        } finally {
-            if (rs != null) {
-                Conexion.close(rs);
-            }
-            if (ps != null) {
-                Conexion.close(ps);
-            }
-            if (conn != null) {
-                Conexion.close(conn);
-            }
         }
 
         return producto;
@@ -155,15 +95,8 @@ public class ProductoDAO {
     public boolean insertarProducto(Producto producto) {
         boolean insertado = false;
 
-        Connection conn = null;
-        PreparedStatement ps = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_INSERT_PRODUCTO)) {
 
-        // Inicializar la conexión y el PreparedStatement
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_INSERT_PRODUCTO);
-
-            // Establecer los valores de los parámetros en la consulta SQL
             ps.setString(1, producto.getCodigoBarras());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getFechaIngreso());
@@ -172,42 +105,25 @@ public class ProductoDAO {
             ps.setInt(6, producto.getCantidad());
             ps.setDouble(7, producto.getPrecio());
 
-            // Ejecutar la consulta
             int filasInsertadas = ps.executeUpdate();
 
-            // Verificar si se insertó correctamente el producto
             if (filasInsertadas > 0) {
                 insertado = true;
             }
 
         } catch (SQLException e) {
-            // Manejar excepciones
             e.printStackTrace(System.out);
-        } finally {
-            if (ps != null) {
-                Conexion.close(ps);
-            }
-            if (conn != null) {
-                Conexion.close(conn);
-            }
         }
 
         return insertado;
     }
 
-    // Método para actualizar un producto existente
+// Método para actualizar un producto existente
     public boolean actualizarProducto(Producto producto) {
         boolean actualizado = false;
 
-        Connection conn = null;
-        PreparedStatement ps = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_UPDATE_PRODUCTO)) {
 
-        // Inicializar la conexión y el PreparedStatement
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_UPDATE_PRODUCTO);
-
-            // Establecer los valores de los parámetros en la consulta SQL
             ps.setString(1, producto.getCodigoBarras());
             ps.setString(2, producto.getNombre());
             ps.setString(3, producto.getFechaIngreso());
@@ -215,26 +131,16 @@ public class ProductoDAO {
             ps.setInt(5, producto.getIdTipo());
             ps.setInt(6, producto.getCantidad());
             ps.setDouble(7, producto.getPrecio());
-            ps.setInt(8, producto.getIdProducto()); // Establecer el idProducto para la condición WHERE
+            ps.setInt(8, producto.getIdProducto());
 
-            // Ejecutar la consulta
             int filasActualizadas = ps.executeUpdate();
 
-            // Verificar si se actualizó correctamente el producto
             if (filasActualizadas > 0) {
                 actualizado = true;
             }
 
         } catch (SQLException e) {
-            // Manejar excepciones
             e.printStackTrace(System.out);
-        } finally {
-            if (ps != null) {
-                Conexion.close(ps);
-            }
-            if (conn != null) {
-                Conexion.close(conn);
-            }
         }
 
         return actualizado;
@@ -244,90 +150,87 @@ public class ProductoDAO {
     public boolean eliminarProducto(int idProducto) {
         boolean eliminado = false;
 
-        Connection conn = null;
-        PreparedStatement ps = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_DELETE_PRODUCTO)) {
 
-        // Inicializar la conexión y el PreparedStatement
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_DELETE_PRODUCTO);
-
-            // Establecer el valor del parámetro en la consulta SQL
             ps.setInt(1, idProducto);
 
-            // Ejecutar la consulta
             int filasEliminadas = ps.executeUpdate();
 
-            // Verificar si se eliminó correctamente el producto
             if (filasEliminadas > 0) {
                 eliminado = true;
             }
 
         } catch (SQLException e) {
-            // Manejar excepciones
             e.printStackTrace(System.out);
-        } finally {
-            if (ps != null) {
-                Conexion.close(ps);
-            }
-            if (conn != null) {
-                Conexion.close(conn);
-            }
         }
 
         return eliminado;
     }
 
-    // Método para obtener productos filtrados por código de barras y nombre nuevo
+    // Método para obtener productos filtrados por código de barras y nombre
     public List<Producto> listarProductosFiltrados(String codigoBarras, String nombre) {
         List<Producto> listaProductos = new ArrayList<>();
 
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS_FILTRADOS)) {
 
-        try {
-            conn = Conexion.getConnection();
-            ps = conn.prepareStatement(SQL_SELECT_PRODUCTOS_FILTRADOS);
-
-            // Establecer los valores de los parámetros en la consulta SQL
             ps.setString(1, codigoBarras);
             ps.setString(2, "%" + nombre + "%");
 
-            rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    int idProducto = rs.getInt("id_producto");
+                    codigoBarras = rs.getString("codigo_barras");
+                    nombre = rs.getString("nombre");
+                    String fechaIngreso = rs.getString("fecha_ingreso");
+                    String fechaVencimiento = rs.getString("fecha_vencimiento");
+                    String idTipoProducto = rs.getString("descripcion");
+                    int cantidad = rs.getInt("cantidad");
+                    double precio = rs.getDouble("precio");
 
-            while (rs.next()) {
-                int idProducto = rs.getInt("id_producto");
-                codigoBarras = rs.getString("codigo_barras");
-                nombre = rs.getString("nombre");
-                String fechaIngreso = rs.getString("fecha_ingreso");
-                String fechaVencimiento = rs.getString("fecha_vencimiento");
-                String idTipoProducto = rs.getString("descripcion");
-                int cantidad = rs.getInt("cantidad");
-                double precio = rs.getDouble("precio");
-
-                // Crear un objeto Producto y agregarlo a la lista
-                Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
-                listaProductos.add(producto);
+                    Producto producto = new Producto(idProducto, codigoBarras, nombre, fechaIngreso, fechaVencimiento, idTipoProducto, cantidad, precio);
+                    listaProductos.add(producto);
+                }
             }
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);
-        } finally {
-            if (rs != null) {
-                Conexion.close(rs);
-            }
-            if (ps != null) {
-                Conexion.close(ps);
-            }
-            if (conn != null) {
-                Conexion.close(conn);
-            }
         }
 
         return listaProductos;
     }
 
+//// Método para obtener estadísticas de productos
+//    public List<Producto> obtenerEstadisticasProductos() {
+//        List<Producto> estadisticasProductos = new ArrayList<>();
+//
+//        try (Connection conn = Conexion.getConnection(); 
+//                PreparedStatement psMasVendido = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO); 
+//                PreparedStatement psMasVendidoMes = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO_MES); 
+//                PreparedStatement psMenosVendido = conn.prepareStatement(SQL_PRODUCTO_MENOS_VENDIDO); 
+//                PreparedStatement psMasTiempoEnStock = conn.prepareStatement(SQL_PRODUCTO_MAS_TIEMPO_EN_STOCK)) {
+//
+//            estadisticasProductos.add(obtenerProductoDesdeResultSet(psMasVendido.executeQuery()));
+//            estadisticasProductos.add(obtenerProductoDesdeResultSet(psMasVendidoMes.executeQuery()));
+//            estadisticasProductos.add(obtenerProductoDesdeResultSet(psMenosVendido.executeQuery()));
+//            estadisticasProductos.add(obtenerProductoDesdeResultSet(psMasTiempoEnStock.executeQuery()));
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace(System.out);
+//        }
+//
+//        return estadisticasProductos;
+//    }
+//    
+//// Método para crear un objeto Producto a partir de un ResultSet
+//    private Producto obtenerProductoDesdeResultSet(ResultSet rs) throws SQLException {
+//        int idProducto = rs.getInt("id_producto");
+//        String codigoBarras = rs.getString("codigo_barras");
+//        String nombre = rs.getString("nombre");
+//        int cantidad = rs.getInt("cantidad"); //total vendido
+//        String fecha_ingreso = rs.getString("fecha_ingreso");
+//
+//        return new Producto(idProducto, codigoBarras, nombre, cantidad, fecha_ingreso);
+//    }
     // Método para obtener estadísticas de productos
     public List<Producto> obtenerEstadisticasProductos() {
         List<Producto> estadisticasProductos = new ArrayList<>();

@@ -92,6 +92,45 @@ public class VentaDAO {
         }
     }
 
+    public boolean cancelarVenta(int idVenta) throws SQLException {
+        try (Connection conn = Conexion.getConnection()) {
+            conn.setAutoCommit(false); // Desactivar el autocommit para manejar transacciones
+
+            // Obtener los detalles de la venta a cancelar
+            List<DetalleVenta> detallesVenta = new DetalleVentaDAO().obtenerDetalleVentaPorIdVenta(idVenta);
+
+            // Incrementar la cantidad en el inventario de productos y eliminar el detalle de venta
+            String updateProductoQuery = "UPDATE Producto SET cantidad = cantidad + ? WHERE id_producto = ?";
+            String deleteDetalleQuery = "DELETE FROM Detalle_Venta WHERE id_venta = ?";
+
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateProductoQuery); PreparedStatement deleteStmt = conn.prepareStatement(deleteDetalleQuery)) {
+
+                for (DetalleVenta detalle : detallesVenta) {
+                    updateStmt.setInt(1, detalle.getCantidadVendida());
+                    updateStmt.setInt(2, detalle.getProducto().getIdProducto());
+                    updateStmt.addBatch();
+                }
+                updateStmt.executeBatch();
+
+                deleteStmt.setInt(1, idVenta);
+                deleteStmt.executeUpdate();
+
+                // Eliminar la venta
+                String deleteVentaQuery = "DELETE FROM Venta WHERE id_venta = ?";
+                try (PreparedStatement deleteVentaStmt = conn.prepareStatement(deleteVentaQuery)) {
+                    deleteVentaStmt.setInt(1, idVenta);
+                    deleteVentaStmt.executeUpdate();
+                }
+
+                conn.commit(); // Confirmar la transacción
+                return true; // Indica que la operación se realizó con éxito
+            } catch (SQLException e) {
+                conn.rollback(); // Revertir la transacción en caso de error
+                throw e;
+            }
+        }
+    }
+
     public List<Venta> obtenerVentasConDetalles() {
         List<Venta> ventas = new ArrayList<>();
 

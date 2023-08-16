@@ -1,3 +1,5 @@
+package web;
+
 
 import Dominio.DetalleVenta;
 import Dominio.Producto;

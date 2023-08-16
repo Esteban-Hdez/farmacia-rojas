@@ -50,13 +50,12 @@
                                         <tbody>
                                             <% for (Venta v : ventas) {%>
                                             <tr>
-                                                <th class="prod-id" scope="row"><%=v.getIdVenta()%></th>
-                                                <td><%=v.getFechaVenta()%></td>
-                                                <td><%=v.getTotalVenta()%></td>
+                                                <th class="venta-id" scope="row"><%=v.getIdVenta()%></th>
+                                                <td class="venta-fecha"><%=v.getFechaVenta()%></td>
+                                                <td class="venta-total"><%=v.getTotalVenta()%></td>
                                                 <td>
                                                     <div class="row">
-                                                        <button type="button" class="btn btn-danger btn-sm btn-delete-venta btn-circle"
-                                                                data-venta-id="<%= v.getIdVenta()%>">
+                                                        <button type="button" class="btn btn-danger btn-sm btn-circle btn-delete-venta">
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                         &nbsp;
@@ -69,31 +68,6 @@
                                                 }%>
                                         </tbody>
                                     </table>
-
-                                    <!-- Modal de confirmación de eliminación de venta -->
-                                    <div class="modal fade" id="deleteVentaModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteVentaLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteVentaLabel"><i class="bi bi-trash text-danger"></i>&nbsp;&nbsp;Eliminar Venta</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form id="deleteVentaForm" method="POST">
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="idVenta" id="idVentaToDelete">
-                                                        ¿Estás seguro de que deseas eliminar esta venta?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
 
                                 </div>
 
@@ -112,8 +86,36 @@
         </div>
         <!-- End of Main Content -->
 
+        <!-- Modal de confirmación de eliminación de venta -->
+        <div class="modal fade" id="deleteVentaModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="deleteVentaModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteVentaLabel"><i class="bi bi-trash text-danger"></i>&nbsp;&nbsp;Eliminar Venta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="SvEliminarVenta" method="POST">
+                        <div class="modal-body">
+                            <input type="hidden"  name="idVenta" id="idVentaToDelete">
+                            <h5>¿Estás seguro de que deseas eliminar esta venta?</h5>
+                            <br>
+                            <h6 id="idVentaMsg">Número de venta: <strong><span></span></strong></h6>
+                            <h6 id="fechaVentaMsg">Fecha realizada: <strong><span></span></strong></h6>
+                            <h6 id="totalVentaMsg">Monto total: <strong>Q <span></span></strong></h6>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Detalle venta modal -->
-        <div class="modal fade" id="detalleVenta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="detalleVenta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="detalleVenta" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -155,28 +157,37 @@
 
         <%@include file="/componentes/footer.jsp" %>
 
-        <%@include file="/componentes/scripts.jsp" %>
+       
 
 
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+        
         <script>
-                            new DataTable('#my-table', {
-                                lengthMenu: [
-                                    [10, 20, -1],
-                                    [10, 20, 'Todos']
-                                ],
-                                language: {
-                                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
-                                }
-                            });
+            new DataTable('#my-table', {
+                lengthMenu: [
+                    [10, 20, -1],
+                    [10, 20, 'Todos']
+                ],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json',
+                }
+            });
         </script>
+        
+        <%@include file="/componentes/scripts.jsp" %>
 
         <script>
             $(document).ready(function () {
-                $('.btn-delete-venta').click(function () {
-                    const ventaId = $(this).data('venta-id');
+                $('.btn-delete-venta').click(function (e) {
+                    e.preventDefault();
+                    const ventaId = $(this).closest('tr').find('.venta-id').text();
+                    const ventaFecha = $(this).closest('tr').find('.venta-fecha').text();
+                    const ventaTotal = $(this).closest('tr').find('.venta-total').text();
                     $('#idVentaToDelete').val(ventaId);
+                    $('#idVentaMsg span').html(ventaId);
+                    $('#fechaVentaMsg span').html(ventaFecha);
+                    $('#totalVentaMsg span').html(ventaTotal);
                     $('#deleteVentaModal').modal('show');
                 });
             });

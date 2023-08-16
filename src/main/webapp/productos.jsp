@@ -65,7 +65,7 @@
                                             <tr>
                                                 <th class="prod-id" scope="row"><%=p.getIdProducto()%></th>
                                                 <td><%=p.getCodigoBarras()%></td>
-                                                <td><%=p.getNombre()%></td>
+                                                <td class="prod-nom"><%=p.getNombre()%></td>
                                                 <td><%=p.getFechaIngreso()%></td>
                                                 <td><%=p.getFechaVencimiento()%></td>
                                                 <td><%=p.getPrecio()%></td>
@@ -95,7 +95,10 @@
                                                 <form action="SvEliminar" method="POST">
                                                     <div class="modal-body">
                                                         <input type="hidden" name="idProducto" id="idProductoDlt">
-                                                        ¿Estas seguro que deseas eliminar este producto?
+                                                        <h5>¿Estás seguro de que deseas eliminar este producto?</h5>
+                                                        <br>
+                                                        <h6 id="idProductMsg">Número de producto: <strong><span></span></strong></h6>
+                                                        <h6 id="nomProductoMsg">Nombre del producto: <strong><span></span></strong></h6>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -148,9 +151,11 @@
                 $('.btn-delete').click(function (e) {
                     e.preventDefault();
                     const idProd = $(this).closest('tr').find('.prod-id').text();
+                    const nombreProducto = $(this).closest('tr').find('.prod-nom').text();
                     $('#idProductoDlt').val(idProd);
+                    $('#idProductMsg span').html(idProd);
+                    $('#nomProductoMsg span').html(nombreProducto);
                     $('#deleteProduct').modal('show');
-
                 });
             });
         </script>

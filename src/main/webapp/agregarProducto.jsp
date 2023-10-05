@@ -76,8 +76,8 @@
                                             </div>
                                             <%                                                List<TipoProducto> tipoProductos = (List) request.getSession().getAttribute("tiposProductos");
                                             %>
-                                            <select class="form-control" aria-label="Default select example" id="tipoMedicamento" name="tipoMedicamento" required>
-                                                <option selected>~ Selecciona tipo de medicamento ~</option>
+                                            <select class="form-control" aria-label="Default select example" id="tipoMedicamento" name="tipoMedicamento" required="required">
+                                                <option value="" >~ Selecciona tipo de medicamento ~</option>
                                                 <% for (TipoProducto tp : tipoProductos) {%>
                                                 <option value="<%=tp.getIdTipoProducto()%>"><%=tp.getDescripcion()%></option>
                                                 <% }%>

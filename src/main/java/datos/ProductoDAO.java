@@ -250,14 +250,6 @@ public class ProductoDAO {
                 estadisticasProductos.add(masVendido);
             }
 
-            // Consulta para el producto más vendido por mes
-            ps = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO_MES);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                Producto masVendidoMes = crearProductoDesdeResultSet(rs);
-                estadisticasProductos.add(masVendidoMes);
-            }
-
             // Consulta para el producto menos vendido
             ps = conn.prepareStatement(SQL_PRODUCTO_MENOS_VENDIDO);
             rs = ps.executeQuery();
@@ -272,6 +264,14 @@ public class ProductoDAO {
             if (rs.next()) {
                 Producto masTiempoEnStock = crearProductoDesdeResultSet(rs);
                 estadisticasProductos.add(masTiempoEnStock);
+            }
+            
+            // Consulta para el producto más vendido por mes
+            ps = conn.prepareStatement(SQL_PRODUCTO_MAS_VENDIDO_MES);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Producto masVendidoMes = crearProductoDesdeResultSet(rs);
+                estadisticasProductos.add(masVendidoMes);
             }
 
         } catch (SQLException e) {

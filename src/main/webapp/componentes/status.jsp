@@ -4,6 +4,13 @@
 
 <%
     List<Producto> productosEstadiscas = (List) request.getSession().getAttribute("productosEstadisticos");
+    
+    String masVendido = "No hay Ventas para el mes elegido";
+    String cantidad = "";
+    if(productosEstadiscas.size()>3){
+        masVendido=productosEstadiscas.get(3).getNombre();
+        cantidad = productosEstadiscas.get(3).getCantidad() + " ventas";
+    }
 %>
 <div class="mb-4 col">
     <div class="card border-left-success shadow h-100 py-2">
@@ -41,10 +48,10 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(1).getNombre()%></div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=masVendido%></div>
                         </div>
                         <div class="col">
-                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(1).getCantidad() + " ventas"%></div>
+                            <div class="h6 mb-0 mr-3"><%=cantidad%></div>
                         </div>
                     </div>
                 </div>
@@ -67,10 +74,10 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(2).getNombre()%></div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(1).getNombre()%></div>
                         </div>
                         <div class="col">
-                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(2).getCantidad() + " ventas"%></div>
+                            <div class="h6 mb-0 mr-3"><%=productosEstadiscas.get(1).getCantidad() + " ventas"%></div>
                         </div>
                     </div>
                 </div>
@@ -93,7 +100,7 @@
                     </div>
                     <div class="row no-gutters align-items-center">
                         <div class="col">
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(3).getNombre()%></div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><%=productosEstadiscas.get(2).getNombre()%></div>
                         </div>
                     </div>
                 </div>
